@@ -26,4 +26,8 @@ struct Position {
     int turn;
 };
 
+struct Move {
+    int squares[2];
+};
+
 #endif

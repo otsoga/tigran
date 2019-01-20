@@ -2,4 +2,4 @@ CC=gcc
 CFLAGS=-Wall
 
 all:
-	$(CC) nimzo.c functions.c -o nimzo
+	$(CC) tigran.c functions.c -o tigran

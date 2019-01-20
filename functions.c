@@ -51,6 +51,8 @@ int makeMove(char move[5], int board[8][8], int turn)
             makeMove("e8-g8", board, WHITE);
             makeMove("h8-f8", board, WHITE);
         }
+    } else {
+        return 0;
     }
 
     return 1;
