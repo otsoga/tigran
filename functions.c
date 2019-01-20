@@ -37,10 +37,10 @@ int makeMove(char move[5], int board[8][8], int turn)
     int from[2];
 
     if (move[0] >= 'a' && move[0] <= 'h') {
-        from[1] = (int) (move[0] - 'a');
-        from[0] = (int) (move[1] - '0' - 1);
-        to[1] = (int) (move[3] - 'a');
-        to[0] = (int) (move[4] - '0' - 1);
+        from[0] = (int) (move[0] - 'a');
+        from[1] = (int) (move[1] - '0' - 1);
+        to[0] = (int) (move[3] - 'a');
+        to[1] = (int) (move[4] - '0' - 1);
 
         movePiece(from, to, board);
     } else if (move == "0-0") {
@@ -59,6 +59,6 @@ int makeMove(char move[5], int board[8][8], int turn)
 }
 
 void movePiece(int from[2], int to[2], int board[8][8]) {
-    board[to[0]][to[1]] = board[from[0]][from[1]];
-    board[from[0]][from[1]] = 0;
+    board[to[1]][to[0]] = board[from[1]][from[0]];
+    board[from[1]][from[0]] = 0;
 }
