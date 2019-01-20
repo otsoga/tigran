@@ -21,4 +21,9 @@ void drawBoard(int board[8][8]);
 void movePiece(int from[2], int to[2], int board[8][8]);
 int makeMove(char move[5], int board[8][8], int turn);
 
+struct Position {
+    int board[8][8];
+    int turn;
+};
+
 #endif
