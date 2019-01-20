@@ -40,6 +40,14 @@ int main(void)
     makeMove("g1-f3", board, WHITE);
     makeMove("b8-c6", board, BLACK);
     makeMove("f1-b5", board, WHITE);
+    makeMove("d7-d6", board, BLACK);
+    makeMove("0-0", board, WHITE);
+    makeMove("f8-e7", board, BLACK);
+    makeMove("f1-e1", board, WHITE);
+    makeMove("g8-f6", board, BLACK);
+    makeMove("c2-c3", board, WHITE);
+    makeMove("0-0", board, BLACK);
+
     drawBoard(board);
 
     return 0;
@@ -83,13 +91,22 @@ int makeMove(char move[5], int board[8][8], int turn)
     int from[2];
 
     if (move[0] >= 'a' && move[0] <= 'h') {
-        from[1] = (int) (move[0] - 'a');
-        from[0] = (int) (move[1] - '0' - 1);
-        to[1] = (int) (move[3] - 'a');
-        to[0] = (int) (move[4] - '0' - 1);
-    }
+//        from[1] = (int) (move[0] - 'a');
+//        from[0] = (int) (move[1] - '0' - 1);
+//        to[1] = (int) (move[3] - 'a');
+//        to[0] = (int) (move[4] - '0' - 1);
 
-    movePiece(from, to, board);
+//        movePiece(from, to, board);
+        movePiece(from, to, board);
+    } else if (move == "0-0") {
+        if (turn == WHITE) {
+            makeMove("e1-g1", board, WHITE);
+            makeMove("h1-f1", board, WHITE);
+        } else if (turn == BLACK) {
+            makeMove("e8-g8", board, WHITE);
+            makeMove("h8-f8", board, WHITE);
+        }
+    }
 
     return 1;
 }
