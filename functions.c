@@ -32,7 +32,7 @@ void drawSquare(int value)
     printf("%c", piece[value]);
 }
 
-int makeMove(char move[20], int board[8][8], int turn)
+int makeMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn)
 {
     int to[2];
     int from[2];

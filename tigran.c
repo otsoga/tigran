@@ -20,22 +20,8 @@ int main(void)
     };
     struct Position currentPosition;
     currentPosition = initialPosition;
-    char userInput[20];
+    char userInput[USER_INPUT_LENGTH];
     
-//    makeMove("e2-e4", currentPosition.board, currentPosition.turn);
-//    makeMove("e7-e5", currentPosition.board, BLACK);
-//    makeMove("g1-f3", currentPosition.board, WHITE);
-//    makeMove("b8-c6", currentPosition.board, BLACK);
-//    makeMove("f1-b5", currentPosition.board, WHITE);
-//    makeMove("d7-d6", currentPosition.board, BLACK);
-//    makeMove("0-0", currentPosition.board, WHITE);
-//    makeMove("f8-e7", currentPosition.board, BLACK);
-//    makeMove("f1-e1", currentPosition.board, WHITE);
-//    makeMove("g8-f6", currentPosition.board, BLACK);
-//    makeMove("c2-c3", currentPosition.board, WHITE);
-//    makeMove("0-0", currentPosition.board, BLACK);
-
-
     while(1) {
         printf("\n");
         drawBoard(currentPosition.board);

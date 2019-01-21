@@ -15,11 +15,12 @@
 #define BP 12
 #define WHITE 1
 #define BLACK 2
+#define USER_INPUT_LENGTH 20
 
 void drawSquare(int value);
 void drawBoard(int board[8][8]);
 void movePiece(int from[2], int to[2], int board[8][8]);
-int makeMove(char move[5], int board[8][8], int turn);
+int makeMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn);
 char * getMove(int turn);
 
 struct Position {
