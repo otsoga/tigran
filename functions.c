@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "functions.h"
 
 void drawBoard(int board[8][8])
@@ -31,7 +32,7 @@ void drawSquare(int value)
     printf("%c", piece[value]);
 }
 
-int makeMove(char move[5], int board[8][8], int turn)
+int makeMove(char move[20], int board[8][8], int turn)
 {
     int to[2];
     int from[2];
@@ -39,9 +40,9 @@ int makeMove(char move[5], int board[8][8], int turn)
     if (move[0] >= 'a' && move[0] <= 'h') {
         from[0] = (int) (move[0] - 'a');
         from[1] = (int) (move[1] - '0' - 1);
-        to[0] = (int) (move[3] - 'a');
-        to[1] = (int) (move[4] - '0' - 1);
-
+        to[0]   = (int) (move[3] - 'a');
+        to[1]   = (int) (move[4] - '0' - 1);
+        
         movePiece(from, to, board);
     } else if (move == "0-0") {
         if (turn == WHITE) {
@@ -61,4 +62,16 @@ int makeMove(char move[5], int board[8][8], int turn)
 void movePiece(int from[2], int to[2], int board[8][8]) {
     board[to[1]][to[0]] = board[from[1]][from[0]];
     board[from[1]][from[0]] = 0;
+}
+
+char * getMove(int turn) 
+{
+    char input[10];
+    if (turn) {
+        printf("White's move: ");
+    } else {
+        printf("Black's move: ");
+    }
+
+    return fgets(input, 10, stdin);
 }
