@@ -32,6 +32,12 @@ void drawSquare(int value)
     printf("%c", piece[value]);
 }
 
+int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn) 
+{
+    return 1;
+}
+
+
 int makeMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn)
 {
     int to[2];
@@ -59,7 +65,8 @@ int makeMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn)
     return 1;
 }
 
-void movePiece(int from[2], int to[2], int board[8][8]) {
+void movePiece(int from[2], int to[2], int board[8][8]) 
+{
     board[to[1]][to[0]] = board[from[1]][from[0]];
     board[from[1]][from[0]] = 0;
 }
@@ -73,5 +80,13 @@ char * getMove(int turn)
         printf("Black's move: ");
     }
 
-    return fgets(input, 10, stdin);
+    return trim(fgets(input, USER_INPUT_LENGTH, stdin));
+}
+
+char * trim(char * input)
+{
+    if (strcmp(input, "\n") != 0) {
+    
+    }
+    return input;
 }

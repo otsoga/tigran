@@ -20,8 +20,10 @@
 void drawSquare(int value);
 void drawBoard(int board[8][8]);
 void movePiece(int from[2], int to[2], int board[8][8]);
+int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn);
 int makeMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn);
 char * getMove(int turn);
+char * trim(char * input);
 
 struct Position {
     int board[8][8];

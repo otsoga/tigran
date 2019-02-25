@@ -32,9 +32,8 @@ int main(void)
             break;
         }
 
-        if (!makeMove(userInput, currentPosition.board, currentPosition.turn)) {
-            printf("Invalid move.\n");
-            continue;
+        if (isLegalMove(userInput, currentPosition.board, currentPosition.turn)) {
+            makeMove(userInput, currentPosition.board, currentPosition.turn);
         }
 
         currentPosition.turn = !currentPosition.turn;
