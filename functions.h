@@ -24,6 +24,8 @@ int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn);
 int makeMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn);
 char * getMove(int turn);
 char * trim(char * input);
+int isFile(char character);
+int isRank(char character);
 
 struct Position {
     int board[8][8];

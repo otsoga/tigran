@@ -37,7 +37,6 @@ int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn)
     return 1;
 }
 
-
 int makeMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn)
 {
     int to[2];
@@ -86,7 +85,25 @@ char * getMove(int turn)
 char * trim(char * input)
 {
     if (strcmp(input, "\n") != 0) {
-    
+        for (int i = 0, len = strlen(input); i < len; i++) {
+            if (input[i] == ' ') {
+                input[i] = '*'; 
+            }
+        }
+
+        printf("%s", input);
+
     }
+
     return input;
+}
+
+int isFile(char character)
+{
+    return (character >= 'a' && character <='h') ? 1 : 0;
+}
+
+int isRank(char character)
+{
+    return (character >='1' && character <='8') ? 1 : 0;
 }
