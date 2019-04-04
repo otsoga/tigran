@@ -35,7 +35,7 @@ void drawSquare(int value)
 
 void formatMove(char * move)
 {
-    if (move == "0-0-0" || move == "0-0") { return; }
+    if (strcmp(move, "0-0") == 0 || strcmp(move, "0-0-0") == 0) { return; }
     if (*(move + 2) != '-') {
         int newLength = strlen(move) + 1;
 
@@ -55,24 +55,31 @@ int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn)
     return 1;
 }
 
-int makeMove(char * move, int board[8][8], int turn)
-{
+int makeMove(char * move, int board[8][8], int turn) {
     int to[2];
     int from[2];
     if (isFile(*move)) {
         from[0] = (int) (*move - 'a');
         from[1] = (int) (*(move + 1) - '0' - 1);
-        to[0]   = (int) (*(move + 3) - 'a');
-        to[1]   = (int) (*(move + 4) - '0' - 1);
-        
+        to[0] = (int) (*(move + 3) - 'a');
+        to[1] = (int) (*(move + 4) - '0' - 1);
+
         movePiece(from, to, board);
-    } else if (move == "0-0") {
+    } else if (strcmp(move, "0-0") == 0) {
         if (turn == WHITE) {
             makeMove("e1-g1", board, WHITE);
             makeMove("h1-f1", board, WHITE);
         } else if (turn == BLACK) {
             makeMove("e8-g8", board, WHITE);
             makeMove("h8-f8", board, WHITE);
+        }
+    } else if (strcmp(move, "0-0-0") == 0) {
+        if (turn == WHITE) {
+            makeMove("e1-c1", board, WHITE);
+            makeMove("a1-d1", board, WHITE);
+        } else if (turn == BLACK) {
+            makeMove("e8-g8", board, WHITE);
+            makeMove("a8-d8", board, WHITE);
         }
     } else {
         return 0;
@@ -89,7 +96,8 @@ void movePiece(int from[2], int to[2], int board[8][8])
 
 char * getMove(int turn) 
 {
-    char * input = (char *) malloc(USER_INPUT_LENGTH);
+    char * input = (char *) calloc(USER_INPUT_LENGTH, sizeof(char));
+    strncpy(input, "\0", sizeof(input));
     if (turn) {
         printf("White's move: ");
     } else {
@@ -120,11 +128,15 @@ char * rtrim(char * string)
 
     for (int i = 0, len = strlen(string); i < len; ++i) {
         if (*(string + i) == ' ') { continue; }
+        if (*(string + i) == '\n') {
+            *(string + i) = '\0';
+            break;
+        }
         endIndex = i;
     }
 
     stringSize = endIndex + 1;
-    trimmedString = (char*) malloc(stringSize);
+    trimmedString = (char*) calloc(stringSize, sizeof(char));
     strncpy(trimmedString, string, stringSize);
 
     return trimmedString;
@@ -140,7 +152,7 @@ char * ltrim(char * string)
         break;
     }
 
-    char * trimmedString = (char *) malloc(strlen(string + startIndex) + 1);
+    char * trimmedString = (char *) calloc(strlen(string + startIndex) + 1, sizeof(char));
     strncpy(trimmedString, (string + startIndex), strlen(string + startIndex)+ 1);
 
     return trimmedString;

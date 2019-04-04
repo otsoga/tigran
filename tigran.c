@@ -27,14 +27,13 @@ int main(void)
         drawBoard(currentPosition.board);
         printf("\n");
         userInput = getMove(currentPosition.turn);
-
-        if (strcmp(userInput, "quit\n") == 0 || strcmp(userInput, "exit\n") == 0) {
+        if (strcmp(userInput, "quit") == 0 || strcmp(userInput, "exit") == 0) {
             free(userInput);
             break;
         }
-        
-        formatMove(userInput);
 
+        formatMove(userInput);
+        printf("'%s'", userInput);
         if (isLegalMove(userInput, currentPosition.board, currentPosition.turn)) {
             makeMove(userInput, currentPosition.board, currentPosition.turn);
         }
