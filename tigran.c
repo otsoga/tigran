@@ -32,6 +32,8 @@ int main(void)
             free(userInput);
             break;
         }
+        
+        formatMove(userInput);
 
         if (isLegalMove(userInput, currentPosition.board, currentPosition.turn)) {
             makeMove(userInput, currentPosition.board, currentPosition.turn);

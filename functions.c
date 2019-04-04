@@ -33,21 +33,37 @@ void drawSquare(int value)
     printf("%c", piece[value]);
 }
 
+void formatMove(char * move)
+{
+    if (move == "0-0-0" || move == "0-0") { return; }
+    if (*(move + 2) != '-') {
+        int newLength = strlen(move) + 1;
+
+        char * tempString = (char *) (malloc(newLength));
+        strncpy(tempString, "\0", newLength);
+        strncpy(tempString, move, 2);
+        strncat(tempString, "-", 1);
+        strncat(tempString, move + 2, 2);
+        move = (char* ) realloc(move, newLength);
+        strncpy(move, tempString, newLength);
+        free(tempString);
+    }
+}
+
 int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn) 
 {
     return 1;
 }
 
-int makeMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn)
+int makeMove(char * move, int board[8][8], int turn)
 {
     int to[2];
     int from[2];
-
-    if (move[0] >= 'a' && move[0] <= 'h') {
-        from[0] = (int) (move[0] - 'a');
-        from[1] = (int) (move[1] - '0' - 1);
-        to[0]   = (int) (move[3] - 'a');
-        to[1]   = (int) (move[4] - '0' - 1);
+    if (isFile(*move)) {
+        from[0] = (int) (*move - 'a');
+        from[1] = (int) (*(move + 1) - '0' - 1);
+        to[0]   = (int) (*(move + 3) - 'a');
+        to[1]   = (int) (*(move + 4) - '0' - 1);
         
         movePiece(from, to, board);
     } else if (move == "0-0") {

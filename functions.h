@@ -20,8 +20,9 @@
 void drawSquare(int value);
 void drawBoard(int board[8][8]);
 void movePiece(int from[2], int to[2], int board[8][8]);
+void formatMove(char * move);
 int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn);
-int makeMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn);
+int makeMove(char * move, int board[8][8], int turn);
 char * getMove(int turn);
 char * rtrim(char * string);
 char * ltrim(char * string);
