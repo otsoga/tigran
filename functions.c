@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "functions.h"
 
 void drawBoard(int board[8][8])
@@ -72,30 +73,61 @@ void movePiece(int from[2], int to[2], int board[8][8])
 
 char * getMove(int turn) 
 {
-    char input[10];
+    char * input = (char *) malloc(USER_INPUT_LENGTH);
     if (turn) {
         printf("White's move: ");
     } else {
         printf("Black's move: ");
     }
 
-    return trim(fgets(input, USER_INPUT_LENGTH, stdin));
+    char * move = trim(fgets(input, USER_INPUT_LENGTH, stdin));
+    free(input);
+
+    return move;
 }
 
-char * trim(char * input)
+char * trim(char * string)
 {
-    if (strcmp(input, "\n") != 0) {
-        for (int i = 0, len = strlen(input); i < len; i++) {
-            if (input[i] == ' ') {
-                input[i] = '*'; 
-            }
-        }
+    char * rtrimmed = rtrim(string);
+    char * trimmed = ltrim(rtrimmed);
 
-        printf("%s", input);
+    free(rtrimmed);
 
+    return trimmed;
+}
+
+char * rtrim(char * string)
+{
+    char * trimmedString;
+    int stringSize;
+    int endIndex = -1;
+
+    for (int i = 0, len = strlen(string); i < len; ++i) {
+        if (*(string + i) == ' ') { continue; }
+        endIndex = i;
     }
 
-    return input;
+    stringSize = endIndex + 1;
+    trimmedString = (char*) malloc(stringSize);
+    strncpy(trimmedString, string, stringSize);
+
+    return trimmedString;
+}
+
+char * ltrim(char * string)
+{
+    int startIndex = -1;
+
+    for (int i = 0, len = strlen(string); i < len; ++i) {
+        if (*(string + i) == ' ') { continue; }
+        startIndex = i;
+        break;
+    }
+
+    char * trimmedString = (char *) malloc(strlen(string + startIndex) + 1);
+    strncpy(trimmedString, (string + startIndex), strlen(string + startIndex)+ 1);
+
+    return trimmedString;
 }
 
 int isFile(char character)

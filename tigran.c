@@ -9,10 +9,10 @@ int main(void)
         {
             {WR, WN, WB, WQ, WK, WB, WN, WR},
             {WP, WP, WP, WP, WP, WP, WP, WP},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
+            {00, 00, 00, 00, 00, 00, 00, 00},
+            {00, 00, 00, 00, 00, 00, 00, 00},
+            {00, 00, 00, 00, 00, 00, 00, 00},
+            {00, 00, 00, 00, 00, 00, 00, 00},
             {BP, BP, BP, BP, BP, BP, BP, BP},
             {BR, BN, BB, BQ, BK, BB, BN, BR}
         }, 
@@ -20,15 +20,16 @@ int main(void)
     };
     struct Position currentPosition;
     currentPosition = initialPosition;
-    char userInput[USER_INPUT_LENGTH];
+    char * userInput;
     
     while(1) {
         printf("\n");
         drawBoard(currentPosition.board);
         printf("\n");
-        strcpy(userInput, getMove(currentPosition.turn));
+        userInput = getMove(currentPosition.turn);
 
-        if (strcmp(userInput, "quit\n") == 0 || strcmp(userInput, "exit\n") == 0) { 
+        if (strcmp(userInput, "quit\n") == 0 || strcmp(userInput, "exit\n") == 0) {
+            free(userInput);
             break;
         }
 
@@ -36,6 +37,7 @@ int main(void)
             makeMove(userInput, currentPosition.board, currentPosition.turn);
         }
 
+        free(userInput);
         currentPosition.turn = !currentPosition.turn;
     }
 
