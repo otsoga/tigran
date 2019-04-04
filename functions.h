@@ -13,8 +13,8 @@
 #define BB 10
 #define BN 11
 #define BP 12
-#define WHITE 1
-#define BLACK 2
+#define WHITE 0
+#define BLACK 1
 #define USER_INPUT_LENGTH 20
 
 void drawSquare(int value);

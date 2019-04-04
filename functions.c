@@ -39,7 +39,7 @@ void formatMove(char * move)
     if (*(move + 2) != '-') {
         int newLength = strlen(move) + 1;
 
-        char * tempString = (char *) (malloc(newLength));
+        char * tempString = (char *) malloc(newLength);
         strncpy(tempString, "\0", newLength);
         strncpy(tempString, move, 2);
         strncat(tempString, "-", 1);
@@ -70,16 +70,16 @@ int makeMove(char * move, int board[8][8], int turn) {
             makeMove("e1-g1", board, WHITE);
             makeMove("h1-f1", board, WHITE);
         } else if (turn == BLACK) {
-            makeMove("e8-g8", board, WHITE);
-            makeMove("h8-f8", board, WHITE);
+            makeMove("e8-g8", board, BLACK);
+            makeMove("h8-f8", board, BLACK);
         }
     } else if (strcmp(move, "0-0-0") == 0) {
         if (turn == WHITE) {
             makeMove("e1-c1", board, WHITE);
             makeMove("a1-d1", board, WHITE);
         } else if (turn == BLACK) {
-            makeMove("e8-g8", board, WHITE);
-            makeMove("a8-d8", board, WHITE);
+            makeMove("e8-g8", board, BLACK);
+            makeMove("a8-d8", board, BLACK);
         }
     } else {
         return 0;
@@ -99,9 +99,9 @@ char * getMove(int turn)
     char * input = (char *) calloc(USER_INPUT_LENGTH, sizeof(char));
     strncpy(input, "\0", sizeof(input));
     if (turn) {
-        printf("White's move: ");
-    } else {
         printf("Black's move: ");
+    } else {
+        printf("White's move: ");
     }
 
     char * move = trim(fgets(input, USER_INPUT_LENGTH, stdin));

@@ -33,7 +33,7 @@ int main(void)
         }
 
         formatMove(userInput);
-        printf("'%s'", userInput);
+
         if (isLegalMove(userInput, currentPosition.board, currentPosition.turn)) {
             makeMove(userInput, currentPosition.board, currentPosition.turn);
         }
