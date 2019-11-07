@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "functions.h"
 
+/* board is [FILES][RANKS] */
 void drawBoard(int board[8][8])
 {
     for (int i = 7; i > -1; i--) {
@@ -52,6 +53,7 @@ void formatMove(char * move)
 
 int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn) 
 {
+    printf("Move: %s", move);
     return 1;
 }
 
@@ -166,4 +168,9 @@ int isFile(char character)
 int isRank(char character)
 {
     return (character >='1' && character <='8') ? 1 : 0;
+}
+
+int getSquareOccupant(char square[2], int board[8][8], int turn)
+{
+
 }
