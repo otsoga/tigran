@@ -52,6 +52,7 @@ void formatMove(char * move)
     }
 }
 
+// TODO: Actually check squares
 int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn)
 {
     printf("Move: %s\n", move);
