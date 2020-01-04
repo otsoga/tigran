@@ -57,19 +57,14 @@ int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn)
     printf("Move: %s\n", move);
     printf("Piece at %c%c: %d", move[0], move[1], getSquareOccupant(move, board));
 
-    return 0;
+    return 1;
 }
 
 /* Makes moves from dash separated algebraic notation, with no validation. Also understands castling */
 int makeMove(char * move, int board[8][8], int turn) {
-    int to[2];
-    int from[2];
     if (isFile(*move)) {
-        from[1] = (int) (*move - 'a');
-        from[0] = (int) (*(move + 1) - '0' - 1);
-        to[1] = (int) (*(move + 3) - 'a');
-        to[0] = (int) (*(move + 4) - '0' - 1);
-
+        int * from = getFromSquareLocation(move);
+        int * to = getToSquareLocation(move);
         movePiece(from, to, board);
     } else if (strcmp(move, "0-0") == 0) {
         if (turn == WHITE) {
@@ -94,11 +89,29 @@ int makeMove(char * move, int board[8][8], int turn) {
     return 1;
 }
 
+int * getToSquareLocation(char * move)
+{
+  int * square = (int *) malloc(sizeof(int) * 2);
+  square[0] = (int) (*(move + 3) - 'a');
+  square[1] = (int) (*(move + 4) - '0' - 1);
+
+  return square;
+}
+
+int * getFromSquareLocation(char * move)
+{
+  int * square = (int *) malloc(sizeof(int) * 2);
+  square[0] =(int) (*move - 'a');
+  square[1] = (int) (*(move + 1) - '0' - 1);
+
+  return square;
+}
+
 /* Moves piece from one part of the board array to another. Only understands ints */
 void movePiece(int from[2], int to[2], int board[8][8])
 {
-    board[to[1]][to[0]] = board[from[1]][from[0]];
-    board[from[1]][from[0]] = 0;
+    board[to[0]][to[1]] = board[from[0]][from[1]];
+    board[from[0]][from[1]] = 0;
 }
 
 /* Prompts the user for a move/command and saves it */

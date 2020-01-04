@@ -29,6 +29,8 @@ char * getMove(int turn);
 char * rtrim(char * string);
 char * ltrim(char * string);
 char * trim(char * string);
+int * getFromSquareLocation(char * move);
+int * getToSquareLocation(char * move);
 int isFile(char character);
 int isRank(char character);
 int getSquareOccupant(char * move, int board[8][8]);
