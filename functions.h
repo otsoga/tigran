@@ -31,7 +31,7 @@ char * ltrim(char * string);
 char * trim(char * string);
 int isFile(char character);
 int isRank(char character);
-int getSquareOccupant(char * move, int board[8][8], int turn);
+int getSquareOccupant(char * move, int board[8][8]);
 
 struct Position {
     int board[8][8];
