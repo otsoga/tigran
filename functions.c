@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include "functions.h"
 
-/* board is [FILES][RANKS] */
-void drawBoard(int board[8][8])
+/* Board coordinate location is inverted because of the way the board is drawn */
+void drawBoard(int board[FILES][RANKS])
 {
     for (int i = 7; i > -1; i--) {
         for(int j = 0; j < 8; j++) {
@@ -34,6 +34,7 @@ void drawSquare(int value)
     printf("%c", piece[value]);
 }
 
+/* Standardizes user input to include a `-` between squares even when the user omits it. */
 void formatMove(char * move)
 {
     if (strcmp(move, "0-0") == 0 || strcmp(move, "0-0-0") == 0) { return; }
@@ -53,10 +54,12 @@ void formatMove(char * move)
 
 int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn) 
 {
-    printf("Move: %s", move);
+    printf("Move: %s\n", move);
+    printf("Piece at %c%c: %d", move[0], move[1], getSquareOccupant(move, board, turn));
     return 1;
 }
 
+/* Makes moves from dash separated algebraic notation, with no validation. Also understands castling */
 int makeMove(char * move, int board[8][8], int turn) {
     int to[2];
     int from[2];
@@ -90,12 +93,14 @@ int makeMove(char * move, int board[8][8], int turn) {
     return 1;
 }
 
+/* Moves piece from one part of the board array to another. Only understands ints */
 void movePiece(int from[2], int to[2], int board[8][8]) 
 {
     board[to[1]][to[0]] = board[from[1]][from[0]];
     board[from[1]][from[0]] = 0;
 }
 
+/* Prompts the user for a move/command and saves it */
 char * getMove(int turn) 
 {
     char * input = (char *) calloc(USER_INPUT_LENGTH, sizeof(char));
@@ -170,7 +175,15 @@ int isRank(char character)
     return (character >='1' && character <='8') ? 1 : 0;
 }
 
-int getSquareOccupant(char square[2], int board[8][8], int turn)
+/* Returns occupant of AN square */
+int getSquareOccupant(char * move, int board[8][8], int turn)
 {
+    int file = (int) (*move - 'a');
+    // have to subtract '0' character probably need to convert numeric char in separate function
+    int rank = 
+    printf("file: %d", file);
+    // exit(0);
 
+    
+    return board[ (int) (*move - 'a')][(int) *(move + 1)];
 }

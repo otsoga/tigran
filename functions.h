@@ -16,6 +16,8 @@
 #define WHITE 0
 #define BLACK 1
 #define USER_INPUT_LENGTH 20
+#define RANKS 8
+#define FILES 8
 
 void drawSquare(int value);
 void drawBoard(int board[8][8]);
@@ -29,7 +31,7 @@ char * ltrim(char * string);
 char * trim(char * string);
 int isFile(char character);
 int isRank(char character);
-int getSquareOccupant(char square[2], int board[8][8], int turn);
+int getSquareOccupant(char * move, int board[8][8], int turn);
 
 struct Position {
     int board[8][8];
