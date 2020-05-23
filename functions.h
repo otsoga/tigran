@@ -35,6 +35,8 @@ int isFile(char character);
 int isRank(char character);
 int getSquareOccupant(char * move, int board[8][8]);
 void gameloop(struct Position currentPosition);
+void castleKingSide(int board[8][8], int turn);
+void castleQueenSide(int board[8][8], int turn);
 
 struct Position {
     int board[8][8];

@@ -66,7 +66,8 @@ int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn)
 }
 
 /* Makes moves from dash separated algebraic notation, with no validation. Also understands castling */
-int makeMove(char * move, int board[8][8], int turn) {
+int makeMove(char * move, int board[8][8], int turn)
+{
     if (isFile(*move)) {
         int * from = getFromSquareLocation(move);
         int * to = getToSquareLocation(move);
@@ -76,34 +77,42 @@ int makeMove(char * move, int board[8][8], int turn) {
     }
 
     if (strcmp(move, "0-0") == 0) {
-        if (turn == WHITE) {
-            makeMove("e1-g1", board, WHITE);
-            makeMove("h1-f1", board, WHITE);
-        } 
-
-        if (turn == BLACK) {
-            makeMove("e8-g8", board, BLACK);
-            makeMove("h8-f8", board, BLACK);
-        }
-
+        castleKingSide(board, turn);
         return 1;
     } 
 
     if (strcmp(move, "0-0-0") == 0) {
-        if (turn == WHITE) {
-            makeMove("e1-c1", board, WHITE);
-            makeMove("a1-d1", board, WHITE);
-        }
-
-        if (turn == BLACK) {
-            makeMove("e8-g8", board, BLACK);
-            makeMove("a8-d8", board, BLACK);
-        }
-
+        castleQueenSide(board, turn);
         return 1;
     }
 
     return 0;
+}
+
+void castleKingSide(int board[8][8], int turn)
+{
+    if (turn == WHITE) {
+        makeMove("e1-g1", board, WHITE);
+        makeMove("h1-f1", board, WHITE);
+    } 
+
+    if (turn == BLACK) {
+        makeMove("e8-g8", board, BLACK);
+        makeMove("h8-f8", board, BLACK);
+    }
+}
+
+void castleQueenSide(int board[8][8], int turn)
+{
+    if (turn == WHITE) {
+        makeMove("e1-c1", board, WHITE);
+        makeMove("a1-d1", board, WHITE);
+    }
+
+    if (turn == BLACK) {
+        makeMove("e8-g8", board, BLACK);
+        makeMove("a8-d8", board, BLACK);
+    }
 }
 
 int * getToSquareLocation(char * move)
