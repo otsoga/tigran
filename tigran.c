@@ -18,14 +18,21 @@ int main(void)
         },
         WHITE
     };
+
     struct Position currentPosition;
     currentPosition = initialPosition;
+
+    gameLoop(currentPosition);
+
+    return 0;
+}
+
+void gameLoop(struct Position currentPosition)
+{
     char * userInput;
 
     while(1) {
-        printf("\n");
         drawBoard(currentPosition.board);
-        printf("\n");
         userInput = getMove(currentPosition.turn);
         if (strcmp(userInput, "quit") == 0 || strcmp(userInput, "exit") == 0) {
             free(userInput);
@@ -43,6 +50,4 @@ int main(void)
         free(userInput);
         currentPosition.turn = !currentPosition.turn;
     }
-
-    return 0;
 }

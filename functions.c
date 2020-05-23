@@ -6,12 +6,16 @@
 /* Board coordinate location is inverted because of the way the board is drawn */
 void drawBoard(int board[FILES][RANKS])
 {
+    printf("\n");
+
     for (int i = 7; i > -1; i--) {
         for(int j = 0; j < 8; j++) {
             drawSquare(board[j][i]);
         }
         printf("\n");
     }
+
+    printf("\n");
 }
 
 void drawSquare(int value)
@@ -67,27 +71,39 @@ int makeMove(char * move, int board[8][8], int turn) {
         int * from = getFromSquareLocation(move);
         int * to = getToSquareLocation(move);
         movePiece(from, to, board);
-    } else if (strcmp(move, "0-0") == 0) {
+
+        return 1;
+    }
+
+    if (strcmp(move, "0-0") == 0) {
         if (turn == WHITE) {
             makeMove("e1-g1", board, WHITE);
             makeMove("h1-f1", board, WHITE);
-        } else if (turn == BLACK) {
+        } 
+
+        if (turn == BLACK) {
             makeMove("e8-g8", board, BLACK);
             makeMove("h8-f8", board, BLACK);
         }
-    } else if (strcmp(move, "0-0-0") == 0) {
+
+        return 1;
+    } 
+
+    if (strcmp(move, "0-0-0") == 0) {
         if (turn == WHITE) {
             makeMove("e1-c1", board, WHITE);
             makeMove("a1-d1", board, WHITE);
-        } else if (turn == BLACK) {
+        }
+
+        if (turn == BLACK) {
             makeMove("e8-g8", board, BLACK);
             makeMove("a8-d8", board, BLACK);
         }
-    } else {
-        return 0;
+
+        return 1;
     }
 
-    return 1;
+    return 0;
 }
 
 int * getToSquareLocation(char * move)
