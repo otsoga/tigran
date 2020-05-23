@@ -141,7 +141,7 @@ void movePiece(int from[2], int to[2], int board[8][8])
 }
 
 /* Prompts the user for a move/command and saves it */
-char * getMove(int turn)
+char * getUserInput(int turn)
 {
     char * input = (char *) calloc(USER_INPUT_LENGTH, sizeof(char));
     strncpy(input, "\0", sizeof(input));
@@ -221,5 +221,5 @@ int getSquareOccupant(char * move, int board[8][8])
     int file = (int) (*move - 'a');
     int rank = (int) *(move + 1) - '1';
     printf("file: %d, rank: %d\n", file, rank);
-    return board[rank][file];
+    return board[file][rank];
 }

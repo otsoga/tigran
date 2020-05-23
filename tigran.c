@@ -33,7 +33,7 @@ void gameLoop(struct Position currentPosition)
 
     while(1) {
         drawBoard(currentPosition.board);
-        userInput = getMove(currentPosition.turn);
+        userInput = getUserInput(currentPosition.turn);
         if (strcmp(userInput, "quit") == 0 || strcmp(userInput, "exit") == 0) {
             free(userInput);
             break;
