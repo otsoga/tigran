@@ -4,13 +4,13 @@
 #include "functions.h"
 
 /* Board coordinate location is inverted because of the way the board is drawn */
-void drawBoard(int board[FILES][RANKS])
+void drawBoard(struct Position currentPosition)
 {
     printf("\n");
 
     for (int i = 7; i > -1; i--) {
         for(int j = 0; j < 8; j++) {
-            drawSquare(board[j][i]);
+            drawSquare(currentPosition.board[j][i]);
         }
         printf("\n");
     }
@@ -141,16 +141,10 @@ void movePiece(int from[2], int to[2], int board[8][8])
 }
 
 /* Prompts the user for a move/command and saves it */
-char * getUserInput(int turn)
+char * getUserInput()
 {
     char * input = (char *) calloc(USER_INPUT_LENGTH, sizeof(char));
     strncpy(input, "\0", sizeof(input));
-    if (turn) {
-        printf("Black's move: ");
-    } else {
-        printf("White's move: ");
-    }
-
     char * move = trim(fgets(input, USER_INPUT_LENGTH, stdin));
     free(input);
 

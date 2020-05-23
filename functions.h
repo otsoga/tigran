@@ -19,25 +19,6 @@
 #define RANKS 8
 #define FILES 8
 
-void drawSquare(int value);
-void drawBoard(int board[8][8]);
-void movePiece(int from[2], int to[2], int board[8][8]);
-void formatMove(char * move);
-int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn);
-int makeMove(char * move, int board[8][8], int turn);
-char * getUserInput(int turn);
-char * rtrim(char * string);
-char * ltrim(char * string);
-char * trim(char * string);
-int * getFromSquareLocation(char * move);
-int * getToSquareLocation(char * move);
-int isFile(char character);
-int isRank(char character);
-int getSquareOccupant(char * move, int board[8][8]);
-void gameloop(struct Position currentPosition);
-void castleKingSide(int board[8][8], int turn);
-void castleQueenSide(int board[8][8], int turn);
-
 struct Position {
     int board[8][8];
     int turn;
@@ -46,5 +27,24 @@ struct Position {
 struct Move {
     int squares[2];
 };
+
+void drawSquare(int value);
+void drawBoard(struct Position currentPosition);
+void movePiece(int from[2], int to[2], int board[8][8]);
+void formatMove(char * move);
+int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn);
+int makeMove(char * move, int board[8][8], int turn);
+char * getUserInput();
+char * rtrim(char * string);
+char * ltrim(char * string);
+char * trim(char * string);
+int * getFromSquareLocation(char * move);
+int * getToSquareLocation(char * move);
+int isFile(char character);
+int isRank(char character);
+int getSquareOccupant(char * move, int board[8][8]);
+void gameLoop(struct Position currentPosition);
+void castleKingSide(int board[8][8], int turn);
+void castleQueenSide(int board[8][8], int turn);
 
 #endif
