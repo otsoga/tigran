@@ -4,13 +4,13 @@
 #include "functions.h"
 
 /* Board coordinate location is inverted because of the way the board is drawn */
-void drawBoard(struct Position currentPosition)
+void drawBoard(struct Position * currentPosition)
 {
     printf("\n");
 
     for (int i = 7; i > -1; i--) {
         for(int j = 0; j < 8; j++) {
-            drawSquare(currentPosition.board[j][i]);
+            drawSquare(currentPosition->board[j][i]);
         }
         printf("\n");
     }
@@ -57,87 +57,111 @@ void formatMove(char * move)
 }
 
 // TODO: Actually check squares
-int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn)
+int isLegalMove(char move[USER_INPUT_LENGTH], struct Position * currentPosition)
 {
     printf("Move: %s\n", move);
-    printf("Piece at %c%c: %d", move[0], move[1], getSquareOccupant(move, board));
+    printf("Piece at %c%c: %d", move[0], move[1], getSquareOccupant(move, currentPosition));
 
     return 1;
 }
 
 /* Makes moves from dash separated algebraic notation, with no validation. Also understands castling */
-int makeMove(char * move, int board[8][8], int turn)
+int makeMove(char * move, struct Position * currentPosition)
 {
+    printf("Move: %s\n", move);
     if (isFile(*move)) {
-        int * from = getFromSquareLocation(move);
-        int * to = getToSquareLocation(move);
-        movePiece(from, to, board);
+        int * from = getFromSquareCoordinates(move);
+        int * to = getToSquareCoordinates(move);
+        printf("TO: %d, %d \n", to[0], to[1]);
+        printf("FROM: %d, %d \n", from[0], from[1] );
+        movePiece(from, to, currentPosition);
 
         return 1;
     }
 
     if (strcmp(move, "0-0") == 0) {
-        castleKingSide(board, turn);
+        castleKingSide(currentPosition);
         return 1;
     } 
 
     if (strcmp(move, "0-0-0") == 0) {
-        castleQueenSide(board, turn);
+        castleQueenSide(currentPosition);
         return 1;
     }
 
     return 0;
 }
 
-void castleKingSide(int board[8][8], int turn)
+int * getToSquareCoordinates(char * move)
 {
-    if (turn == WHITE) {
-        makeMove("e1-g1", board, WHITE);
-        makeMove("h1-f1", board, WHITE);
-    } 
+    int * square = (int *) malloc(sizeof(int) * 2);
+    square[0] = (int) (*(move + 3) - 'a');
+    square[1] = (int) (*(move + 4) - '0' - 1);
 
-    if (turn == BLACK) {
-        makeMove("e8-g8", board, BLACK);
-        makeMove("h8-f8", board, BLACK);
-    }
+    return square;
 }
 
-void castleQueenSide(int board[8][8], int turn)
+int * getFromSquareCoordinates(char * move)
 {
-    if (turn == WHITE) {
-        makeMove("e1-c1", board, WHITE);
-        makeMove("a1-d1", board, WHITE);
-    }
+    
+    int * square = (int *) malloc(sizeof(int) * 2);
+    square[0] = (int) (*move - 'a');
+    square[1] = (int) (*(move + 1) - '0' - 1);
 
-    if (turn == BLACK) {
-        makeMove("e8-g8", board, BLACK);
-        makeMove("a8-d8", board, BLACK);
-    }
-}
-
-int * getToSquareLocation(char * move)
-{
-  int * square = (int *) malloc(sizeof(int) * 2);
-  square[0] = (int) (*(move + 3) - 'a');
-  square[1] = (int) (*(move + 4) - '0' - 1);
-
-  return square;
-}
-
-int * getFromSquareLocation(char * move)
-{
-  int * square = (int *) malloc(sizeof(int) * 2);
-  square[0] =(int) (*move - 'a');
-  square[1] = (int) (*(move + 1) - '0' - 1);
-
-  return square;
+    return square;
 }
 
 /* Moves piece from one part of the board array to another. Only understands ints */
-void movePiece(int from[2], int to[2], int board[8][8])
+void movePiece(int from[2], int to[2], struct Position * currentPosition)
 {
-    board[to[0]][to[1]] = board[from[0]][from[1]];
-    board[from[0]][from[1]] = 0;
+    currentPosition->board[to[0]][to[1]] = currentPosition->board[from[0]][from[1]];
+    currentPosition->board[from[0]][from[1]] = 0;
+}
+
+void castleKingSide(struct Position * currentPosition)
+{
+    if (currentPosition->turn == WHITE) {
+        makeMove("e1-g1", currentPosition);
+        makeMove("h1-f1", currentPosition);
+    } 
+
+    if (currentPosition->turn == BLACK) {
+        makeMove("e8-g8", currentPosition);
+        makeMove("h8-f8", currentPosition);
+    }
+}
+
+void castleQueenSide(struct Position * currentPosition)
+{
+    if (currentPosition->turn == WHITE) {
+        makeMove("e1-c1", currentPosition);
+        makeMove("a1-d1", currentPosition);
+    }
+
+    if (currentPosition->turn == BLACK) {
+        makeMove("e8-g8", currentPosition);
+        makeMove("a8-d8", currentPosition);
+    }
+}
+
+int isFile(char character)
+{
+    return (character >= 'a' && character <='h') ? 1 : 0;
+}
+
+int isRank(char character)
+{
+    return (character >='1' && character <='8') ? 1 : 0;
+}
+
+/* Returns occupant of a AN square */
+int getSquareOccupant(char * move, struct Position * currentPosition)
+{
+    int file = (int) (*move - 'a');
+    int rank = (int) *(move + 1) - '1';
+    printf("file: %d, rank: %d\n", file, rank);
+    
+    return currentPosition->board[file][rank];
 }
 
 /* Prompts the user for a move/command and saves it */
@@ -197,23 +221,4 @@ char * ltrim(char * string)
     strncpy(trimmedString, (string + startIndex), strlen(string + startIndex)+ 1);
 
     return trimmedString;
-}
-
-int isFile(char character)
-{
-    return (character >= 'a' && character <='h') ? 1 : 0;
-}
-
-int isRank(char character)
-{
-    return (character >='1' && character <='8') ? 1 : 0;
-}
-
-/* Returns occupant of a AN square */
-int getSquareOccupant(char * move, int board[8][8])
-{
-    int file = (int) (*move - 'a');
-    int rank = (int) *(move + 1) - '1';
-    printf("file: %d, rank: %d\n", file, rank);
-    return board[file][rank];
 }

@@ -28,23 +28,23 @@ struct Move {
     int squares[2];
 };
 
+void gameLoop(struct Position * currentPosition);
 void drawSquare(int value);
-void drawBoard(struct Position currentPosition);
-void movePiece(int from[2], int to[2], int board[8][8]);
+void drawBoard(struct Position * currentPosition);
+void movePiece(int from[2], int to[2], struct Position * currentPosition);
 void formatMove(char * move);
-int isLegalMove(char move[USER_INPUT_LENGTH], int board[8][8], int turn);
-int makeMove(char * move, int board[8][8], int turn);
+int isLegalMove(char move[USER_INPUT_LENGTH], struct Position * currentPosition);
+int makeMove(char * move, struct Position * currentPosition);
 char * getUserInput();
 char * rtrim(char * string);
 char * ltrim(char * string);
 char * trim(char * string);
-int * getFromSquareLocation(char * move);
-int * getToSquareLocation(char * move);
+int * getFromSquareCoordinates(char * move);
+int * getToSquareCoordinates(char * move);
 int isFile(char character);
 int isRank(char character);
-int getSquareOccupant(char * move, int board[8][8]);
-void gameLoop(struct Position currentPosition);
-void castleKingSide(int board[8][8], int turn);
-void castleQueenSide(int board[8][8], int turn);
+int getSquareOccupant(char * move, struct Position * currentPosition);
+void castleKingSide(struct Position * currentPosition);
+void castleQueenSide(struct Position * currentPosition);
 
 #endif

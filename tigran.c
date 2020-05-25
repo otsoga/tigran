@@ -19,21 +19,20 @@ int main(void)
         WHITE
     };
 
-    struct Position currentPosition;
-    currentPosition = initialPosition;
+    struct Position currentPosition = initialPosition;
 
-    gameLoop(currentPosition);
+    gameLoop(&currentPosition);
 
     return 0;
 }
 
-void gameLoop(struct Position currentPosition)
+void gameLoop(struct Position * currentPosition)
 {
     char * userInput;
 
     while(1) {
         drawBoard(currentPosition);
-        printf("%s's move: ", currentPosition.turn ? "Black" : "White");
+        printf("%s's move: ", currentPosition->turn ? "Black" : "White");
         userInput = getUserInput();
 
         if (strcmp(userInput, "quit") == 0 || strcmp(userInput, "exit") == 0) {
@@ -43,13 +42,13 @@ void gameLoop(struct Position currentPosition)
 
         formatMove(userInput);
 
-        if (!isLegalMove(userInput, currentPosition.board, currentPosition.turn)) {
+        if (!isLegalMove(userInput, currentPosition)) {
           printf("\nIllegal move, try again.\n");
           continue;
         }
 
-        makeMove(userInput, currentPosition.board, currentPosition.turn);
+        makeMove(userInput, currentPosition);
         free(userInput);
-        currentPosition.turn = !currentPosition.turn;
+        currentPosition->turn = !currentPosition->turn;
     }
 }
