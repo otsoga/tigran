@@ -39,19 +39,19 @@ void drawSquare(int value)
 }
 
 /* Standardizes user input to include a `-` between squares even when the user omits it. */
-void formatMove(char * move)
+void formatMove(char * userInput)
 {
-    if (strcmp(move, "0-0") == 0 || strcmp(move, "0-0-0") == 0) { return; }
-    if (*(move + 2) != '-') {
-        int newLength = strlen(move) + 1;
+    if (strcmp(userInput, "0-0") == 0 || strcmp(userInput, "0-0-0") == 0) { return; }
+    if (*(userInput + 2) != '-') {
+        int newLength = strlen(userInput) + 1;
 
         char * tempString = (char *) malloc(newLength);
         strncpy(tempString, "\0", newLength);
-        strncpy(tempString, move, 2);
+        strncpy(tempString, userInput, 2);
         strncat(tempString, "-", 1);
-        strncat(tempString, move + 2, 2);
-        move = (char* ) realloc(move, newLength);
-        strncpy(move, tempString, newLength);
+        strncat(tempString, userInput + 2, 2);
+        userInput = (char* ) realloc(userInput, newLength);
+        strncpy(userInput, tempString, newLength);
         free(tempString);
     }
 }
