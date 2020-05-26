@@ -46,5 +46,6 @@ int isRank(char character);
 int getSquareOccupant(char * move, struct Position * currentPosition);
 void castleKingSide(struct Position * currentPosition);
 void castleQueenSide(struct Position * currentPosition);
+int getOccupantColor(int occupant);
 
 #endif

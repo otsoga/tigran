@@ -41,13 +41,12 @@ void drawSquare(int value)
 void formatMove(char * userInput)
 {
     if (strcmp(userInput, "0-0") == 0 || strcmp(userInput, "0-0-0") == 0) { return; }
-    if (*(userInput + 2) != '-') {
+    if (userInput[2] != '-') { // this was *(userInput +2) before
         int newLength = strlen(userInput) + 1;
-
         char * tempString = (char *) malloc(newLength);
         strncpy(tempString, "\0", newLength);
         strncpy(tempString, userInput, 2);
-        strncat(tempString, "-", 1);
+        strcat(tempString, "-");
         strncat(tempString, userInput + 2, 2);
         userInput = (char* ) realloc(userInput, newLength);
         strncpy(userInput, tempString, newLength);
@@ -59,12 +58,11 @@ int isLegalMove(char * move, struct Position * currentPosition)
 {
     int fromSquareOccupant = getSquareOccupant(move, currentPosition);
     int toSquareOccupant = getSquareOccupant(&move[3], currentPosition);
-    printf("Move: %s\n", move);
-    printf("Piece at %c%c: %d", move[0], move[1], fromSquareOccupant);
     if (strcmp(move, "0-0") == 0 || strcmp(move, "0-0-0") == 0) { return 1; }
     if (!isFile(move[0]) || !isRank(move[1]) || !isFile(move[3]) || !isRank(move[4])) { return 0; }
     if (getOccupantColor(fromSquareOccupant) != currentPosition->turn) { return 0; }
     if (getOccupantColor(toSquareOccupant) == currentPosition->turn) { return 0; }
+
     return 1;
 }
 
@@ -160,8 +158,8 @@ int isRank(char character)
 /* Returns occupant of a AN square */
 int getSquareOccupant(char * square, struct Position * currentPosition)
 {
-    int file = (int) (*square - 'a');
-    int rank = (int) *(square + 1) - '1';
+    int file = (int) square[0] - 'a';
+    int rank = (int) square[1] - '1';
     printf("file: %d, rank: %d\n", file, rank);
     
     return currentPosition->board[file][rank];

@@ -44,6 +44,7 @@ void gameLoop(struct Position * currentPosition)
 
         if (!isLegalMove(userInput, currentPosition)) {
           printf("\nIllegal move, try again.\n");
+          free(userInput);
           continue;
         }
 
