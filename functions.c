@@ -199,9 +199,9 @@ char * rtrim(char * string)
     int endIndex = -1;
 
     for (int i = 0, len = strlen(string); i < len; ++i) {
-        if (*(string + i) == ' ') { continue; }
-        if (*(string + i) == '\n') {
-            *(string + i) = '\0';
+        if (string[i] == ' ') { continue; }
+        if (string[i] == '\n') {
+            string[i] = '\0';
             break;
         }
         endIndex = i;
@@ -219,7 +219,7 @@ char * ltrim(char * string)
     int startIndex = -1;
 
     for (int i = 0, len = strlen(string); i < len; ++i) {
-        if (*(string + i) == ' ') { continue; }
+        if (string[i] == ' ') { continue; }
         startIndex = i;
         break;
     }
