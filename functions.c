@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "functions.h"
 
-/* Board coordinate location is inverted because of the way the board is drawn */
 void drawBoard(struct Position * currentPosition)
 {
     printf("\n");
@@ -56,24 +55,28 @@ void formatMove(char * userInput)
     }
 }
 
-// TODO: Actually check squares
-int isLegalMove(char move[USER_INPUT_LENGTH], struct Position * currentPosition)
+int isLegalMove(char * move, struct Position * currentPosition)
 {
+    int fromSquareOccupant = getSquareOccupant(move, currentPosition);
+    int toSquareOccupant = getSquareOccupant(&move[3], currentPosition);
     printf("Move: %s\n", move);
-    printf("Piece at %c%c: %d", move[0], move[1], getSquareOccupant(move, currentPosition));
-
+    printf("Piece at %c%c: %d", move[0], move[1], fromSquareOccupant);
+    if (strcmp(move, "0-0") == 0 || strcmp(move, "0-0-0") == 0) { return 1; }
+    if (!isFile(move[0]) || !isRank(move[1]) || !isFile(move[3]) || !isRank(move[4])) { return 0; }
+    if (getOccupantColor(fromSquareOccupant) != currentPosition->turn) { return 0; }
+    if (getOccupantColor(toSquareOccupant) == currentPosition->turn) { return 0; }
     return 1;
 }
 
 /* Makes moves from dash separated algebraic notation, with no validation. Also understands castling */
 int makeMove(char * move, struct Position * currentPosition)
 {
-    printf("Move: %s\n", move);
+    // printf("Move: %s\n", move);
     if (isFile(*move)) {
         int * from = getFromSquareCoordinates(move);
         int * to = getToSquareCoordinates(move);
-        printf("TO: %d, %d \n", to[0], to[1]);
-        printf("FROM: %d, %d \n", from[0], from[1] );
+        // printf("TO: %d, %d \n", to[0], to[1]);
+        // printf("FROM: %d, %d \n", from[0], from[1] );
         movePiece(from, to, currentPosition);
 
         return 1;
@@ -155,16 +158,22 @@ int isRank(char character)
 }
 
 /* Returns occupant of a AN square */
-int getSquareOccupant(char * move, struct Position * currentPosition)
+int getSquareOccupant(char * square, struct Position * currentPosition)
 {
-    int file = (int) (*move - 'a');
-    int rank = (int) *(move + 1) - '1';
+    int file = (int) (*square - 'a');
+    int rank = (int) *(square + 1) - '1';
     printf("file: %d, rank: %d\n", file, rank);
     
     return currentPosition->board[file][rank];
 }
 
-/* Prompts the user for a move/command and saves it */
+int getOccupantColor(int occupant)
+{
+    if (occupant < WK || occupant > BP) { return 0; }
+    if (occupant >= WK && occupant <= WP) { return WHITE; }
+    if (occupant >= BK && occupant <= BP) { return BLACK; }
+}
+
 char * getUserInput()
 {
     char * input = (char *) calloc(USER_INPUT_LENGTH, sizeof(char));

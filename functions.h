@@ -13,8 +13,8 @@
 #define BB 10
 #define BN 11
 #define BP 12
-#define WHITE 0
-#define BLACK 1
+#define WHITE 1
+#define BLACK 2
 #define USER_INPUT_LENGTH 20
 #define RANKS 8
 #define FILES 8
@@ -33,7 +33,7 @@ void drawSquare(int value);
 void drawBoard(struct Position * currentPosition);
 void movePiece(int from[2], int to[2], struct Position * currentPosition);
 void formatMove(char * move);
-int isLegalMove(char move[USER_INPUT_LENGTH], struct Position * currentPosition);
+int isLegalMove(char * move, struct Position * currentPosition);
 int makeMove(char * move, struct Position * currentPosition);
 char * getUserInput();
 char * rtrim(char * string);

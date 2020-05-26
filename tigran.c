@@ -32,7 +32,7 @@ void gameLoop(struct Position * currentPosition)
 
     while(1) {
         drawBoard(currentPosition);
-        printf("%s's move: ", currentPosition->turn ? "Black" : "White");
+        printf("%s's move: ", currentPosition->turn  == 2 ? "Black" : "White");
         userInput = getUserInput();
 
         if (strcmp(userInput, "quit") == 0 || strcmp(userInput, "exit") == 0) {
@@ -49,6 +49,6 @@ void gameLoop(struct Position * currentPosition)
 
         makeMove(userInput, currentPosition);
         free(userInput);
-        currentPosition->turn = !currentPosition->turn;
+        currentPosition->turn = currentPosition->turn == WHITE ? BLACK : WHITE;
     }
 }
