@@ -32,9 +32,9 @@ int isLegalMoveForPawn(char * move, struct Position * currentPosition)
 {
     if (currentPosition->turn == WHITE) {
         int rankDiff = move[TO_RANK] - move[FROM_RANK];
-        if (rankDiff > 2 || rankDiff < 1) return 0; 
+        if (rankDiff > 2 || rankDiff < 1) { return 0; } 
         int notOnSecondRank = (int) move[FROM_RANK] - '0' != 2;
-        if (notOnSecondRank && rankDiff == 2) return 0; 
+        if (notOnSecondRank && rankDiff == 2) { return 0; } 
         int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
         if (fileDiff > 1) { return 0; }
         int pieceDiagonallyAdjacent = fileDiff == 1 && rankDiff == 1;
