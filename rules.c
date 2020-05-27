@@ -39,8 +39,13 @@ int isLegalMoveForPawn(char * move, struct Position * currentPosition)
         if (fileDiff > 1) { return 0; }
         int pieceDiagonallyAdjacent = fileDiff == 1 && rankDiff == 1;
         int toSquareOccupant = getSquareOccupant(&move[3], currentPosition);
-        if (pieceDiagonallyAdjacent && !toSquareOccupant) {return 0; }
-        if (fileDiff == 0 && toSquareOccupant); // looks like this isn't working
+        printf("occupant: %d\n", toSquareOccupant);
+        if (pieceDiagonallyAdjacent && !toSquareOccupant) { return 0; }
+        char squareInFrontOfPawn[] = {move[FROM_FILE], move[FROM_RANK] + 1, '\0'};
+        char * squarePointer = malloc(sizeof(char) * 3);
+        squarePointer = squareInFrontOfPawn;
+        int squareInFrontOfPawnOccupied = getSquareOccupant(squarePointer, currentPosition);
+        if (fileDiff == 0 && (toSquareOccupant || squareInFrontOfPawnOccupied)) { return 0; }
     } 
     
     return 1;
