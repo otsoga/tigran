@@ -20,17 +20,6 @@ void formatMove(char * userInput)
     }
 }
 
-int isLegalMove(char * move, struct Position * currentPosition)
-{
-    int fromSquareOccupant = getSquareOccupant(move, currentPosition);
-    int toSquareOccupant = getSquareOccupant(&move[3], currentPosition);
-    if (strcmp(move, "0-0") == 0 || strcmp(move, "0-0-0") == 0) { return 1; }
-    if (!isFile(move[0]) || !isRank(move[1]) || !isFile(move[3]) || !isRank(move[4])) { return 0; }
-    if (getOccupantColor(fromSquareOccupant) != currentPosition->turn) { return 0; }
-    if (getOccupantColor(toSquareOccupant) == currentPosition->turn) { return 0; }
-
-    return 1;
-}
 
 /* Makes moves from dash separated algebraic notation, with no validation. Also understands castling */
 int makeMove(char * move, struct Position * currentPosition)
@@ -111,29 +100,3 @@ void castleQueenSide(struct Position * currentPosition)
     }
 }
 
-int isFile(char character)
-{
-    return (character >= 'a' && character <='h') ? 1 : 0;
-}
-
-int isRank(char character)
-{
-    return (character >='1' && character <='8') ? 1 : 0;
-}
-
-/* Returns occupant of a AN square */
-int getSquareOccupant(char * square, struct Position * currentPosition)
-{
-    int file = (int) square[0] - 'a';
-    int rank = (int) square[1] - '1';
-    printf("file: %d, rank: %d\n", file, rank);
-    
-    return currentPosition->board[file][rank];
-}
-
-int getOccupantColor(int occupant)
-{
-    if (occupant < WK || occupant > BP) { return 0; }
-    if (occupant >= WK && occupant <= WP) { return WHITE; }
-    if (occupant >= BK && occupant <= BP) { return BLACK; }
-}
