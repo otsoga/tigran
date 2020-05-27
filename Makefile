@@ -2,4 +2,4 @@ CC=gcc
 CFLAGS=-Wall
 
 all:
-	$(CC) tigran.c functions.c -o tigran
+	$(CC) tigran.c functions.c input.c board.c -o tigran
