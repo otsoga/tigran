@@ -23,15 +23,19 @@ int isLegalMoveForPiece(char * move, struct Position * currentPosition)
 
     switch(getOccupantPieceType(piece)) {
         case PAWN:
-            return isLegalMoveForPawn(move, currentPosition);
+            return isLegalPawnMove(move, currentPosition);
         case KNIGHT:
             return isLegalKnightMove(move, currentPosition);
+        case BISHOP:
+            return isLegalBishopMove(move, currentPosition);
+        case ROOK:
+            return isLegalRookMove(move, currentPosition);
         default:
             return 1;
     }
 }
 
-int isLegalMoveForPawn(char * move, struct Position * currentPosition)
+int isLegalPawnMove(char * move, struct Position * currentPosition)
 {
     int isWhite = currentPosition->turn == WHITE;
     int rankDiff = isWhite ? move[TO_RANK] - move[FROM_RANK] : move[FROM_RANK] - move[TO_RANK];
@@ -55,10 +59,31 @@ int isLegalKnightMove(char * move, struct Position * currentPosition)
 {
     int rankDiff = abs(move[TO_RANK] - move[FROM_RANK]);
     int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
-
     int knightJumps = ((rankDiff == 2 && fileDiff == 1) || (rankDiff == 1 && fileDiff == 2));
 
     if (!knightJumps) { return 0; }
+
+    return 1;
+}
+
+int isLegalBishopMove(char * move, struct Position * currentPosition)
+{
+    int rankDiff = abs(move[TO_RANK] - move[FROM_RANK]);
+    int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
+    int moveOnDiagonal = rankDiff == fileDiff;
+
+    if (!moveOnDiagonal) { return 0; }
+
+    return 1;
+}
+
+int isLegalRookMove(char * move, struct Position * currentPosition)
+{
+    int rankDiff = abs(move[TO_RANK] - move[FROM_RANK]);
+    int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
+    int moveOnRankOrFile = rankDiff == 0 || fileDiff == 0;
+
+    if (!moveOnRankOrFile) { return 0; }
 
     return 1;
 }
@@ -88,10 +113,10 @@ int getOccupantPieceType(int occupant)
 
 int isFile(char character)
 {
-    return (character >= 'a' && character <='h') ? 1 : 0;
+    return (character >= 'a' && character <= 'h') ? 1 : 0;
 }
 
 int isRank(char character)
 {
-    return (character >='1' && character <='8') ? 1 : 0;
+    return (character >= '1' && character <= '8') ? 1 : 0;
 }
