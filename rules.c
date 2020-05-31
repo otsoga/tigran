@@ -24,6 +24,8 @@ int isLegalMoveForPiece(char * move, struct Position * currentPosition)
     switch(getOccupantPieceType(piece)) {
         case PAWN:
             return isLegalMoveForPawn(move, currentPosition);
+        case KNIGHT:
+            return isLegalKnightMove(move, currentPosition);
         default:
             return 1;
     }
@@ -46,6 +48,18 @@ int isLegalMoveForPawn(char * move, struct Position * currentPosition)
     if (pieceDiagonallyAdjacent && !toSquareOccupant) { return 0; }
     if (fileDiff == 0 && (toSquareOccupant || squareInFrontOfPawnOccupied)) { return 0; }
     
+    return 1;
+}
+
+int isLegalKnightMove(char * move, struct Position * currentPosition)
+{
+    int rankDiff = abs(move[TO_RANK] - move[FROM_RANK]);
+    int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
+
+    int knightJumps = ((rankDiff == 2 && fileDiff == 1) || (rankDiff == 1 && fileDiff == 2));
+
+    if (!knightJumps) { return 0; }
+
     return 1;
 }
 

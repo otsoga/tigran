@@ -46,6 +46,7 @@ void formatMove(char * move);
 int isLegalMove(char * move, struct Position * currentPosition);
 int isLegalMoveForPiece(char * move, struct Position * currentPosition);
 int isLegalMoveForPawn(char * move, struct Position * currentPosition);
+int isLegalKnightMove(char * move, struct Position * currentPosition);
 int makeMove(char * move, struct Position * currentPosition);
 char * getUserInput();
 char * rtrim(char * string);
