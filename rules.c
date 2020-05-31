@@ -31,21 +31,20 @@ int isLegalMoveForPiece(char * move, struct Position * currentPosition)
 
 int isLegalMoveForPawn(char * move, struct Position * currentPosition)
 {
-    int rankDiff = move[TO_RANK] - move[FROM_RANK];
-    int notOnSecondRank = (int) move[FROM_RANK] - '0' != 2;
+    int isWhite = currentPosition->turn == WHITE;
+    int rankDiff = isWhite ? move[TO_RANK] - move[FROM_RANK] : move[FROM_RANK] - move[TO_RANK];
+    int notOnSecondRank = (int) move[FROM_RANK] - '0' != (isWhite ? 2 : 7);
     int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
     int pieceDiagonallyAdjacent = fileDiff == 1 && rankDiff == 1;
     int toSquareOccupant = getSquareOccupant(&move[3], currentPosition);
-    char squareInFrontOfPawn[] = {move[FROM_FILE], move[FROM_RANK] + 1};
+    char squareInFrontOfPawn[] = {move[FROM_FILE], move[FROM_RANK] + (isWhite ? 1 : -1)};
     int squareInFrontOfPawnOccupied = getSquareOccupant(squareInFrontOfPawn, currentPosition);
 
-    if (currentPosition->turn == WHITE) {
-        if (rankDiff > 2 || rankDiff < 1) { return 0; } 
-        if (notOnSecondRank && rankDiff == 2) { return 0; } 
-        if (fileDiff > 1) { return 0; }
-        if (pieceDiagonallyAdjacent && !toSquareOccupant) { return 0; }
-        if (fileDiff == 0 && (toSquareOccupant || squareInFrontOfPawnOccupied)) { return 0; }
-    } 
+    if (rankDiff > 2 || rankDiff < 1) { return 0; } 
+    if (notOnSecondRank && rankDiff == 2) { return 0; } 
+    if (fileDiff > 1) { return 0; }
+    if (pieceDiagonallyAdjacent && !toSquareOccupant) { return 0; }
+    if (fileDiff == 0 && (toSquareOccupant || squareInFrontOfPawnOccupied)) { return 0; }
     
     return 1;
 }
