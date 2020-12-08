@@ -29,10 +29,12 @@ int main(void)
 void gameLoop(struct Position * currentPosition)
 {
     char * userInput;
+    char turn[5];
 
     while(1) {
         drawBoard(currentPosition);
-        printf("%s's move: ", currentPosition->turn  == 2 ? "Black" : "White");
+        strncpy(turn, currentPosition->turn  == TURN_BLACK ? "Black" : "White", 5);
+        printf("%s's move: ", turn);
         userInput = getUserInput();
 
         if (strcmp(userInput, "quit") == 0 || strcmp(userInput, "exit") == 0) {

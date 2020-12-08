@@ -28,6 +28,8 @@
 #define FROM_RANK 1
 #define TO_FILE 3
 #define TO_RANK 4
+#define TURN_WHITE 1
+#define TURN_BLACK 2
 
 struct Position {
     int board[8][8];
