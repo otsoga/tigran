@@ -46,12 +46,12 @@ int isLegalPawnMove(char * move, struct Position * currentPosition)
     char squareInFrontOfPawn[] = {move[FROM_FILE], move[FROM_RANK] + (isWhite ? 1 : -1)};
     int squareInFrontOfPawnOccupied = getSquareOccupant(squareInFrontOfPawn, currentPosition);
 
-    if (rankDiff > 2 || rankDiff < 1) { return 0; } 
-    if (notOnSecondRank && rankDiff == 2) { return 0; } 
+    if (rankDiff > 2 || rankDiff < 1) { return 0; }
+    if (notOnSecondRank && rankDiff == 2) { return 0; }
     if (fileDiff > 1) { return 0; }
     if (pieceDiagonallyAdjacent && !toSquareOccupant) { return 0; }
     if (fileDiff == 0 && (toSquareOccupant || squareInFrontOfPawnOccupied)) { return 0; }
-    
+
     return 1;
 }
 
@@ -95,7 +95,7 @@ int getSquareOccupant(char * square, struct Position * currentPosition)
     int file = (int) square[0] - 'a';
     int rank = (int) square[1] - '1';
     // printf("file: %d, rank: %d\n", file, rank);
-    
+
     return currentPosition->board[file][rank];
 }
 
@@ -119,4 +119,12 @@ int isFile(char character)
 int isRank(char character)
 {
     return (character >= '1' && character <= '8') ? 1 : 0;
+}
+
+struct CandidateMoveList * getLegalMoves(struct Position * currentPosition)
+{
+    struct CandidateMoveList * legalMoves = malloc(sizeof * legalMoves);
+    strncpy(legalMoves->move, "e2-e4", 7);
+
+    return legalMoves;
 }

@@ -36,6 +36,11 @@ struct Position {
     int turn;
 };
 
+struct CandidateMoveList {
+    char move[7];
+    struct CandidateMoveList * next;
+};
+
 void gameLoop(struct Position * currentPosition);
 void drawSquare(int value);
 void drawBoard(struct Position * currentPosition);
@@ -61,6 +66,7 @@ void castleKingSide(struct Position * currentPosition);
 void castleQueenSide(struct Position * currentPosition);
 int getOccupantColor(int occupant);
 int getOccupantPieceType(int occupant);
-
+void displayLegalMoves(struct Position * currentPostion);
+struct CandidateMoveList * getLegalMoves(struct Position * currentPosition);
 
 #endif

@@ -34,3 +34,9 @@ void drawSquare(int value)
 
     printf("%c", piece[value]);
 }
+
+void displayLegalMoves(struct Position * currentPosition)
+{
+    struct CandidateMoveList * move = getLegalMoves(currentPosition);
+    printf("Moves: %s", move->move );
+}

@@ -29,11 +29,13 @@ int main(void)
 void gameLoop(struct Position * currentPosition)
 {
     char * userInput;
-    char turn[5];
+    char turn[6];
 
     while(1) {
         drawBoard(currentPosition);
-        strncpy(turn, currentPosition->turn  == TURN_BLACK ? "Black" : "White", 5);
+        strncpy(turn, currentPosition->turn  == TURN_BLACK ? "Black" : "White", 6);
+        printf("Legal moves for %s: \n", turn);
+        // displayLegalMoves(currentPosition);
         printf("%s's move: ", turn);
         userInput = getUserInput();
 

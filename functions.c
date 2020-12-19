@@ -31,6 +31,8 @@ int makeMove(char * move, struct Position * currentPosition)
         // printf("TO: %d, %d \n", to[0], to[1]);
         // printf("FROM: %d, %d \n", from[0], from[1] );
         movePiece(from, to, currentPosition);
+        free(from);
+        free(to);
 
         return 1;
     }
@@ -38,7 +40,7 @@ int makeMove(char * move, struct Position * currentPosition)
     if (strcmp(move, "0-0") == 0) {
         castleKingSide(currentPosition);
         return 1;
-    } 
+    }
 
     if (strcmp(move, "0-0-0") == 0) {
         castleQueenSide(currentPosition);
@@ -59,7 +61,7 @@ int * getToSquareCoordinates(char * move)
 
 int * getFromSquareCoordinates(char * move)
 {
-    
+
     int * square = (int *) malloc(sizeof(int) * 2);
     square[0] = (int) (*move - 'a');
     square[1] = (int) (*(move + 1) - '0' - 1);
@@ -79,7 +81,7 @@ void castleKingSide(struct Position * currentPosition)
     if (currentPosition->turn == WHITE) {
         makeMove("e1-g1", currentPosition);
         makeMove("h1-f1", currentPosition);
-    } 
+    }
 
     if (currentPosition->turn == BLACK) {
         makeMove("e8-g8", currentPosition);
@@ -99,4 +101,3 @@ void castleQueenSide(struct Position * currentPosition)
         makeMove("a8-d8", currentPosition);
     }
 }
-
