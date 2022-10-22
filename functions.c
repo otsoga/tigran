@@ -61,7 +61,6 @@ int * getToSquareCoordinates(char * move)
 
 int * getFromSquareCoordinates(char * move)
 {
-
     int * square = (int *) malloc(sizeof(int) * 2);
     square[0] = (int) (*move - 'a');
     square[1] = (int) (*(move + 1) - '0' - 1);
