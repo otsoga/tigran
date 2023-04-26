@@ -30,10 +30,12 @@
 #define TO_RANK 4
 #define TURN_WHITE 1
 #define TURN_BLACK 2
+#define NOT_POSSIBLE -1
 
 struct Position {
     int board[8][8];
     int turn;
+    int enPassantFile;
 };
 
 struct CandidateMoveList {
@@ -68,5 +70,6 @@ int getOccupantColor(int occupant);
 int getOccupantPieceType(int occupant);
 void displayLegalMoves(struct Position * currentPostion);
 struct CandidateMoveList * getLegalMoves(struct Position * currentPosition);
+void logEvent(char * text);
 
 #endif

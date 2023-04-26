@@ -100,3 +100,18 @@ void castleQueenSide(struct Position * currentPosition)
         makeMove("a8-d8", currentPosition);
     }
 }
+
+void logEvent(char * text)
+{
+    FILE * logFile;
+    logFile = fopen("log.txt", "a");
+
+    if (logFile == NULL)
+    {
+        printf("\nUnable to access log file, quitting.\n");   
+        exit(1);             
+    }
+
+    fprintf(logFile, "%s", text);
+    fclose(logFile);
+}

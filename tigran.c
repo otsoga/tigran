@@ -16,7 +16,8 @@ int main(void)
             {WN, WP, 00, 00, 00, 00, BP, BN},
             {WR, WP, 00, 00, 00, 00, BP, BR}
         },
-        WHITE
+        WHITE,
+        NOT_POSSIBLE
     };
 
     struct Position currentPosition = initialPosition;
@@ -31,6 +32,7 @@ void gameLoop(struct Position * currentPosition)
     char * userInput;
     char turn[6];
 
+    logEvent("New Game Started");
     while(1) {
         drawBoard(currentPosition);
         strncpy(turn, currentPosition->turn  == TURN_BLACK ? "Black" : "White", 6);
