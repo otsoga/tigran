@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include "functions.h"
-
+#include "config.h"
 /* Standardizes user input to include a `-` between squares even when the user omits it. */
 void formatMove(char * userInput)
 {
@@ -101,10 +102,13 @@ void castleQueenSide(struct Position * currentPosition)
     }
 }
 
-void logEvent(char * text)
+void logText(char * text)
 {
+    if (!LOG_EVENTS) {
+        return;
+    }
     FILE * logFile;
-    logFile = fopen("log.txt", "a");
+    logFile = fopen(LOG_FILE, "a");
 
     if (logFile == NULL)
     {
@@ -114,4 +118,23 @@ void logEvent(char * text)
 
     fprintf(logFile, "%s", text);
     fclose(logFile);
+}
+
+void logEvent(char * type, char * text)
+{
+    char eventText[1024];
+    char * now = getCurrentTimestamp();
+    sprintf(eventText, "[%s][%s] %s\n", now, type, text);
+    logText(eventText);
+    free(now);
+}
+
+char * getCurrentTimestamp()
+{
+  time_t t = time(NULL);
+  struct tm tm = *localtime(&t);
+  char * now = calloc(20, sizeof(char));
+  sprintf(now, "%d-%02d-%02d %02d:%02d:%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+
+  return now;
 }

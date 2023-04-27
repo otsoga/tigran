@@ -32,7 +32,7 @@ void gameLoop(struct Position * currentPosition)
     char * userInput;
     char turn[6];
 
-    logEvent("New Game Started");
+    logText("New Game Started");
     while(1) {
         drawBoard(currentPosition);
         strncpy(turn, currentPosition->turn  == TURN_BLACK ? "Black" : "White", 6);

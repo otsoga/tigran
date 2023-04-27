@@ -70,6 +70,8 @@ int getOccupantColor(int occupant);
 int getOccupantPieceType(int occupant);
 void displayLegalMoves(struct Position * currentPostion);
 struct CandidateMoveList * getLegalMoves(struct Position * currentPosition);
-void logEvent(char * text);
+void logText(char * text);
+void logEvent(char * type, char * text);
+char * getCurrentTimestamp();
 
 #endif
