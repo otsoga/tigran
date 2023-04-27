@@ -2,13 +2,15 @@
 #include <string.h>
 #include <stdlib.h>
 #include "functions.h"
+#include "log.h"
+
 
 char * getUserInput()
 {
     char * input = (char *) calloc(USER_INPUT_LENGTH, sizeof(char));
     strncpy(input, "\0", sizeof(input));
     char * move = trim(fgets(input, USER_INPUT_LENGTH, stdin));
-    logEvent("trimmed input", move);
+    logEvent("user input", move);
 
     free(input);
 
@@ -17,7 +19,7 @@ char * getUserInput()
 
 char * trim(char * string)
 {
-    logEvent("raw input", string);
+    // logEvent("raw input", string);
     char * rtrimmed = rtrim(string);
     char * trimmed = ltrim(rtrimmed);
 

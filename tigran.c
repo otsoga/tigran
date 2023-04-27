@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "functions.h"
+#include "log.h"
+
 
 int main(void)
 {

@@ -2,18 +2,38 @@
 #include <string.h>
 #include <stdlib.h>
 #include "functions.h"
+#include "log.h"
 
 int isLegalMove(char * move, struct Position * currentPosition)
 {
-    if (strcmp(move, "0-0") == 0 || strcmp(move, "0-0-0") == 0) { return 1; }
+    if (strcmp(move, "0-0") == 0 || strcmp(move, "0-0-0") == 0) {
+        logEvent("move", "castling is always legal");
+        return 1;
+    }
+
     int isValidFromSquare = isFile(move[FROM_FILE]) && isRank(move[FROM_RANK]);
     int isValidToSquare = isFile(move[TO_FILE]) && isRank(move[TO_RANK]);
-    if (!isValidFromSquare || !isValidToSquare) { return 0; }
+    
+    if (!isValidFromSquare || !isValidToSquare) { 
+        logEvent("user error", "invalid to/from square");
+        return 0; 
+    }
+
     int fromSquareOccupant = getSquareOccupant(move, currentPosition);
     int toSquareOccupant = getSquareOccupant(&move[3], currentPosition);
-    if (getOccupantColor(fromSquareOccupant) != currentPosition->turn) { return 0; }
-    if (getOccupantColor(toSquareOccupant) == currentPosition->turn) { return 0; }
+
+    if (getOccupantColor(fromSquareOccupant) != currentPosition->turn) { 
+        logEvent("user error", "trying move enemy piece or nonexistent piece.");
+        return 0;
+    }
+
+    if (getOccupantColor(toSquareOccupant) == currentPosition->turn) { 
+        logEvent("user error", "cannot capture own piece");
+        return 0;
+    }
+
     if (!isLegalMoveForPiece(move, currentPosition)) { return 0; }
+    
     return 1;
 }
 
