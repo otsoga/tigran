@@ -14,6 +14,7 @@ int isLegalMove(char * move, struct Position * currentPosition)
     int isValidFromSquare = isFile(move[FROM_FILE]) && isRank(move[FROM_RANK]);
     int isValidToSquare = isFile(move[TO_FILE]) && isRank(move[TO_RANK]);
     
+    // user error should be "illegal move"
     if (!isValidFromSquare || !isValidToSquare) { 
         logEvent("user error", "invalid to/from square");
         return 0; 
@@ -66,11 +67,29 @@ int isLegalPawnMove(char * move, struct Position * currentPosition)
     char squareInFrontOfPawn[] = {move[FROM_FILE], move[FROM_RANK] + (isWhite ? 1 : -1)};
     int squareInFrontOfPawnOccupied = getSquareOccupant(squareInFrontOfPawn, currentPosition);
 
-    if (rankDiff > 2 || rankDiff < 1) { return 0; }
-    if (notOnSecondRank && rankDiff == 2) { return 0; }
-    if (fileDiff > 1) { return 0; }
-    if (pieceDiagonallyAdjacent && !toSquareOccupant) { return 0; }
-    if (fileDiff == 0 && (toSquareOccupant || squareInFrontOfPawnOccupied)) { return 0; }
+    if (rankDiff > 2 || rankDiff < 1) {
+        logUserError("pawns can only move one or two squares");
+        return 0;    
+    }
+
+    if (notOnSecondRank && rankDiff == 2) { 
+        logUserError("pawns can only move two squares if they are on the second rank");
+        return 0;
+    }
+    if (fileDiff > 1) { 
+        return 0;
+        logUserError("pawns cannot move across multiple files");   
+    }
+
+    if (pieceDiagonallyAdjacent && !toSquareOccupant) { 
+        logUserError("pawns can only capture enemy pieces that are diagonally adjacent to them.");
+        return 0;
+    }
+
+    if (fileDiff == 0 && (toSquareOccupant || squareInFrontOfPawnOccupied)) {
+        logUserError("pawns can only capture enemy pieces that are diagonally adjacent to them.");
+        return 0;
+    }
 
     return 1;
 }

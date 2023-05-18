@@ -3,6 +3,7 @@
 
 void logText(char * text);
 void logEvent(char * type, char * text);
+void logUserError(char * text);
 char * getCurrentTimestamp();
 
 #endif

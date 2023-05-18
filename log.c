@@ -6,6 +6,20 @@
 #include "log.h"
 #include "config.h"
 
+void logUserError(char * text)
+{
+    logEvent("user error", text);
+}
+
+void logEvent(char * type, char * text)
+{
+    char eventText[1024];
+    char * now = getCurrentTimestamp();
+    sprintf(eventText, "[%s][%s] %s\n", now, type, text);
+    logText(eventText);
+    free(now);
+}
+
 void logText(char * text)
 {
     if (!LOG_EVENTS) {
@@ -22,15 +36,6 @@ void logText(char * text)
 
     fprintf(logFile, "%s", text);
     fclose(logFile);
-}
-
-void logEvent(char * type, char * text)
-{
-    char eventText[1024];
-    char * now = getCurrentTimestamp();
-    sprintf(eventText, "[%s][%s] %s\n", now, type, text);
-    logText(eventText);
-    free(now);
 }
 
 char * getCurrentTimestamp()
