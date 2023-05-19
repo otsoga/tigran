@@ -2,13 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "functions.h"
-#include "rules.h"
 #include "log.h"
-
+#include "rules.h"
 
 int main(void)
 {
-    const struct Position initialPosition = {
+    struct Position initialPosition = {
         {
             {WR, WP, 00, 00, 00, 00, BP, BR},
             {WN, WP, 00, 00, 00, 00, BP, BN},
@@ -23,14 +22,16 @@ int main(void)
         NOT_POSSIBLE
     };
 
-    struct Position currentPosition = initialPosition;
+    struct Position * currentPosition = calloc(1, sizeof(struct Position));
+    copyPosition(&initialPosition, currentPosition);
 
-    gameLoop(&currentPosition);
+    gameLoop(&initialPosition, currentPosition);
+    free(currentPosition);
 
     return 0;
 }
 
-void gameLoop(struct Position * currentPosition)
+void gameLoop(struct Position * initialPosition, struct Position * currentPosition)
 {
     char * userInput;
     char turn[6];
@@ -47,6 +48,12 @@ void gameLoop(struct Position * currentPosition)
         if (strcmp(userInput, "quit") == 0 || strcmp(userInput, "exit") == 0) {
             free(userInput);
             break;
+        }
+
+        if (strcmp(userInput, "restart") == 0 || strcmp(userInput, "exit") == 0) {
+            free(userInput);
+            copyPosition(initialPosition, currentPosition);
+            continue;
         }
 
         formatMove(userInput);

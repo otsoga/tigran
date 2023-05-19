@@ -8,12 +8,38 @@
 int isLegalMove(char * move, struct Position * currentPosition)
 {
     if (strcmp(move, "0-0") == 0 || strcmp(move, "0-0-0") == 0) {
-        logEvent("move", "castling is always legal");
+        if (!isLegalCastleMove(move, currentPosition)) { return 0; }
+    }
+
+    if (!isEachSquareValid(move, currentPosition)) { return 0; }
+    if (!isLegalMoveForPiece(move, currentPosition)) { return 0; }
+    
+    return 1;
+}
+
+int isKingInCheck(struct Position * currentPosition)
+{
+    struct Position currentPositionWithOpponentTurn;
+    return 0;
+}
+
+int isLegalCastleMove(char * move, struct Position * currentPosition)
+{
+    if (strcmp(move, "0-0") == 0) {
         return 1;
     }
 
-    int isValidFromSquare = isFile(move[FROM_FILE]) && isRank(move[FROM_RANK]);
-    int isValidToSquare = isFile(move[TO_FILE]) && isRank(move[TO_RANK]);
+    if (strcmp(move, "0-0-0") == 0) {
+        return 1;
+    }
+
+    return 0;
+}
+
+int isEachSquareValid(char * move, struct Position * currentPosition) 
+{
+    int isValidFromSquare = isFile(move[ORIGIN_FILE]) && isRank(move[ORIGIN_RANK]);
+    int isValidToSquare = isFile(move[DESTINATION_FILE]) && isRank(move[DESTINATION_RANK]);
     
     if (!isValidFromSquare || !isValidToSquare) { 
         logUserError("invalid to/from square");
@@ -33,8 +59,6 @@ int isLegalMove(char * move, struct Position * currentPosition)
         return 0;
     }
 
-    if (!isLegalMoveForPiece(move, currentPosition)) { return 0; }
-    
     return 1;
 }
 
@@ -61,12 +85,12 @@ int isLegalMoveForPiece(char * move, struct Position * currentPosition)
 int isLegalPawnMove(char * move, struct Position * currentPosition)
 {
     int isWhite = currentPosition->turn == WHITE;
-    int rankDiff = isWhite ? move[TO_RANK] - move[FROM_RANK] : move[FROM_RANK] - move[TO_RANK];
-    int notOnSecondRank = (int) move[FROM_RANK] - '0' != (isWhite ? 2 : 7);
-    int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
+    int rankDiff = isWhite ? move[DESTINATION_RANK] - move[ORIGIN_RANK] : move[ORIGIN_RANK] - move[DESTINATION_RANK];
+    int notOnSecondRank = (int) move[ORIGIN_RANK] - '0' != (isWhite ? 2 : 7);
+    int fileDiff = abs(move[DESTINATION_FILE] - move[ORIGIN_FILE]);
     int pieceDiagonallyAdjacent = fileDiff == 1 && rankDiff == 1;
     int toSquareOccupant = getSquareOccupant(&move[3], currentPosition);
-    char squareInFrontOfPawn[] = {move[FROM_FILE], move[FROM_RANK] + (isWhite ? 1 : -1)};
+    char squareInFrontOfPawn[] = {move[ORIGIN_FILE], move[ORIGIN_RANK] + (isWhite ? 1 : -1)};
     int squareInFrontOfPawnOccupied = getSquareOccupant(squareInFrontOfPawn, currentPosition);
 
     if (rankDiff > 2 || rankDiff < 1) {
@@ -98,8 +122,8 @@ int isLegalPawnMove(char * move, struct Position * currentPosition)
 
 int isLegalKnightMove(char * move, struct Position * currentPosition)
 {
-    int rankDiff = abs(move[TO_RANK] - move[FROM_RANK]);
-    int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
+    int rankDiff = abs(move[DESTINATION_RANK] - move[ORIGIN_RANK]);
+    int fileDiff = abs(move[DESTINATION_FILE] - move[ORIGIN_FILE]);
     int knightJumps = ((rankDiff == 2 && fileDiff == 1) || (rankDiff == 1 && fileDiff == 2));
 
     if (!knightJumps) { 
@@ -112,8 +136,8 @@ int isLegalKnightMove(char * move, struct Position * currentPosition)
 
 int isLegalBishopMove(char * move, struct Position * currentPosition)
 {
-    int rankDiff = abs(move[TO_RANK] - move[FROM_RANK]);
-    int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
+    int rankDiff = abs(move[DESTINATION_RANK] - move[ORIGIN_RANK]);
+    int fileDiff = abs(move[DESTINATION_FILE] - move[ORIGIN_FILE]);
     int moveOnDiagonal = rankDiff == fileDiff;
 
     if (!moveOnDiagonal) { 
@@ -126,8 +150,8 @@ int isLegalBishopMove(char * move, struct Position * currentPosition)
 
 int isLegalRookMove(char * move, struct Position * currentPosition)
 {
-    int rankDiff = abs(move[TO_RANK] - move[FROM_RANK]);
-    int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
+    int rankDiff = abs(move[DESTINATION_RANK] - move[ORIGIN_RANK]);
+    int fileDiff = abs(move[DESTINATION_FILE] - move[ORIGIN_FILE]);
     int moveOnRankOrFile = rankDiff == 0 || fileDiff == 0;
 
     if (!moveOnRankOrFile) { 
@@ -140,8 +164,8 @@ int isLegalRookMove(char * move, struct Position * currentPosition)
 
 int isLegalQueenMove(char * move, struct Position * currentPosition)
 {
-    int rankDiff = abs(move[TO_RANK] - move[FROM_RANK]);
-    int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
+    int rankDiff = abs(move[DESTINATION_RANK] - move[ORIGIN_RANK]);
+    int fileDiff = abs(move[DESTINATION_FILE] - move[ORIGIN_FILE]);
     int moveOnRankOrFile = rankDiff == 0 || fileDiff == 0;
     int moveOnDiagonal = rankDiff == fileDiff;
 

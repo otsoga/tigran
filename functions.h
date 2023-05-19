@@ -24,21 +24,24 @@
 #define USER_INPUT_LENGTH 20
 #define RANKS 8
 #define FILES 8
-#define FROM_FILE 0
-#define FROM_RANK 1
-#define TO_FILE 3
-#define TO_RANK 4
+#define ORIGIN_FILE 0
+#define ORIGIN_RANK 1
+#define DESTINATION_FILE 3
+#define DESTINATION_RANK 4
 #define TURN_WHITE 1
 #define TURN_BLACK 2
 #define NOT_POSSIBLE -1
+#define NOT_PROHBITED = 0
 
 struct Position {
     int board[8][8];
     int turn;
     int enPassantFile;
+    int kingsideCastleStatus;
+    int queensideCastleStatus;
 };
 
-void gameLoop(struct Position * currentPosition);
+void gameLoop(struct Position * initialPosition, struct Position * currentPosition);
 void drawSquare(int value);
 void drawBoard(struct Position * currentPosition);
 void movePiece(int from[2], int to[2], struct Position * currentPosition);
@@ -57,6 +60,7 @@ void castleKingSide(struct Position * currentPosition);
 void castleQueenSide(struct Position * currentPosition);
 int getOccupantColor(int occupant);
 int getOccupantPieceType(int occupant);
+void copyPosition(struct Position * sourcePosition, struct Position * destinationPosition);
 void displayLegalMoves(struct Position * currentPostion);
 
 #endif

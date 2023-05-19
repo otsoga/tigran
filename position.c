@@ -1,6 +1,23 @@
 #include <stdio.h>
 #include "functions.h"
 
+void copyPosition(struct Position * sourcePosition, struct Position * destinationPosition)
+{
+    for (int i = 0; i < 8; i++) {
+        for(int j = 0; j < 8; j++) {
+            destinationPosition->board[i][j] = sourcePosition->board[i][j];
+        }
+    }
+
+    destinationPosition->turn = sourcePosition->turn;
+    destinationPosition->enPassantFile = sourcePosition->enPassantFile;
+    destinationPosition->kingsideCastleStatus = sourcePosition->kingsideCastleStatus;
+    destinationPosition->queensideCastleStatus = sourcePosition->queensideCastleStatus;
+}
+
+
+
+
 /* Returns occupant of a AN square */
 int getSquareOccupant(char * square, struct Position * currentPosition)
 {
