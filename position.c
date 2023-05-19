@@ -15,11 +15,13 @@ void copyPosition(struct Position * sourcePosition, struct Position * destinatio
     destinationPosition->queensideCastleStatus = sourcePosition->queensideCastleStatus;
 }
 
-
-
+void switchTurn(struct Position * currentPosition)
+{
+    currentPosition->turn = currentPosition->turn == WHITE ? BLACK : WHITE;
+}
 
 /* Returns occupant of a AN square */
-int getSquareOccupant(char * square, struct Position * currentPosition)
+int getSquareOccupant(struct Position * currentPosition, char * square)
 {
     // subracting by 'a' and '1' because of zero-indexed arrays
     int file = (int) square[0] - 'a';

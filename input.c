@@ -1,20 +1,20 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "functions.h"
 #include "log.h"
+#include "input.h"
 
 
 char * getUserInput()
 {
     char * input = (char *) calloc(USER_INPUT_LENGTH, sizeof(char));
     strncpy(input, "\0", sizeof(input));
-    char * move = trim(fgets(input, USER_INPUT_LENGTH, stdin));
-    logEvent("user input", move);
+    char * trimmedInput = trim(fgets(input, USER_INPUT_LENGTH, stdin));
+    logEvent("user input", trimmedInput);
 
     free(input);
 
-    return move;
+    return trimmedInput;
 }
 
 char * trim(char * string)

@@ -23,7 +23,7 @@ void formatMove(char * userInput)
 
 
 /* Makes moves from dash separated algebraic notation, with no validation. Also understands castling */
-int makeMove(char * move, struct Position * currentPosition)
+int makeMove(struct Position * currentPosition, char * move)
 {
     // printf("Move: %s\n", move);
     if (isFile(*move)) {
@@ -31,7 +31,7 @@ int makeMove(char * move, struct Position * currentPosition)
         int * to = getToSquareCoordinates(move);
         // printf("TO: %d, %d \n", to[0], to[1]);
         // printf("FROM: %d, %d \n", from[0], from[1] );
-        movePiece(from, to, currentPosition);
+        movePiece(currentPosition, from, to);
         free(from);
         free(to);
 
@@ -70,7 +70,7 @@ int * getFromSquareCoordinates(char * move)
 }
 
 /* Moves piece from one part of the board array to another. Only understands ints */
-void movePiece(int from[2], int to[2], struct Position * currentPosition)
+void movePiece(struct Position * currentPosition, int from[2], int to[2])
 {
     currentPosition->board[to[0]][to[1]] = currentPosition->board[from[0]][from[1]];
     currentPosition->board[from[0]][from[1]] = 0;
@@ -79,25 +79,25 @@ void movePiece(int from[2], int to[2], struct Position * currentPosition)
 void castleKingSide(struct Position * currentPosition)
 {
     if (currentPosition->turn == WHITE) {
-        makeMove("e1-g1", currentPosition);
-        makeMove("h1-f1", currentPosition);
+        makeMove(currentPosition, "e1-g1");
+        makeMove(currentPosition, "h1-f1");
     }
 
     if (currentPosition->turn == BLACK) {
-        makeMove("e8-g8", currentPosition);
-        makeMove("h8-f8", currentPosition);
+        makeMove(currentPosition, "e8-g8");
+        makeMove(currentPosition, "h8-f8");
     }
 }
 
 void castleQueenSide(struct Position * currentPosition)
 {
     if (currentPosition->turn == WHITE) {
-        makeMove("e1-c1", currentPosition);
-        makeMove("a1-d1", currentPosition);
+        makeMove(currentPosition, "e1-c1");
+        makeMove(currentPosition, "a1-d1");
     }
 
     if (currentPosition->turn == BLACK) {
-        makeMove("e8-g8", currentPosition);
-        makeMove("a8-d8", currentPosition);
+        makeMove(currentPosition, "e8-g8");
+        makeMove(currentPosition, "a8-d8");
     }
 }

@@ -46,8 +46,8 @@ int isEachSquareValid(char * move, struct Position * currentPosition)
         return 0; 
     }
 
-    int fromSquareOccupant = getSquareOccupant(move, currentPosition);
-    int toSquareOccupant = getSquareOccupant(&move[3], currentPosition);
+    int fromSquareOccupant = getSquareOccupant(currentPosition, move);
+    int toSquareOccupant = getSquareOccupant(currentPosition, &move[3]);
 
     if (getOccupantColor(fromSquareOccupant) != currentPosition->turn) { 
         logUserError("trying move enemy piece or nonexistent piece.");
@@ -64,7 +64,7 @@ int isEachSquareValid(char * move, struct Position * currentPosition)
 
 int isLegalMoveForPiece(char * move, struct Position * currentPosition)
 {
-    int piece = getSquareOccupant(move, currentPosition);
+    int piece = getSquareOccupant(currentPosition, move);
 
     switch(getOccupantPieceType(piece)) {
         case PAWN:
@@ -89,9 +89,9 @@ int isLegalPawnMove(char * move, struct Position * currentPosition)
     int notOnSecondRank = (int) move[ORIGIN_RANK] - '0' != (isWhite ? 2 : 7);
     int fileDiff = abs(move[DESTINATION_FILE] - move[ORIGIN_FILE]);
     int pieceDiagonallyAdjacent = fileDiff == 1 && rankDiff == 1;
-    int toSquareOccupant = getSquareOccupant(&move[3], currentPosition);
+    int toSquareOccupant = getSquareOccupant(currentPosition, &move[3]);
     char squareInFrontOfPawn[] = {move[ORIGIN_FILE], move[ORIGIN_RANK] + (isWhite ? 1 : -1)};
-    int squareInFrontOfPawnOccupied = getSquareOccupant(squareInFrontOfPawn, currentPosition);
+    int squareInFrontOfPawnOccupied = getSquareOccupant(currentPosition, squareInFrontOfPawn);
 
     if (rankDiff > 2 || rankDiff < 1) {
         logUserError("pawns can only move one or two squares");
@@ -179,7 +179,7 @@ int isLegalQueenMove(char * move, struct Position * currentPosition)
 
 struct CandidateMoveList * getLegalMoves(struct Position * currentPosition)
 {
-    struct CandidateMoveList * legalMoves = malloc(sizeof * legalMoves);
+    struct CandidateMoveList * legalMoves = malloc(sizeof(struct CandidateMoveList));
     strncpy(legalMoves->move, "e2-e4", 7);
 
     return legalMoves;

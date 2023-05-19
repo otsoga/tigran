@@ -31,7 +31,7 @@
 #define TURN_WHITE 1
 #define TURN_BLACK 2
 #define NOT_POSSIBLE -1
-#define NOT_PROHBITED = 0
+#define NOT_PROHBITED 0
 
 struct Position {
     int board[8][8];
@@ -41,26 +41,34 @@ struct Position {
     int queensideCastleStatus;
 };
 
-void gameLoop(struct Position * initialPosition, struct Position * currentPosition);
+void gameLoop();
 void drawSquare(int value);
 void drawBoard(struct Position * currentPosition);
-void movePiece(int from[2], int to[2], struct Position * currentPosition);
-void formatMove(char * move);
-int makeMove(char * move, struct Position * currentPosition);
-char * getUserInput();
-char * rtrim(char * string);
-char * ltrim(char * string);
-char * trim(char * string);
-int * getFromSquareCoordinates(char * move);
-int * getToSquareCoordinates(char * move);
-int isFile(char character);
-int isRank(char character);
-int getSquareOccupant(char * move, struct Position * currentPosition);
-void castleKingSide(struct Position * currentPosition);
-void castleQueenSide(struct Position * currentPosition);
+void displayLegalMoves(struct Position * currentPosition);
+
+int getSquareOccupant(struct Position * currentPosition, char * move);
 int getOccupantColor(int occupant);
 int getOccupantPieceType(int occupant);
+
+// these modify the given position
+void initPosition(struct Position * position);
+void movePiece(struct Position * currentPosition, int from[2], int to[2]);
+int makeMove(struct Position * currentPosition, char * move);
+void castleKingSide(struct Position * currentPosition);
+void castleQueenSide(struct Position * currentPosition);
+void switchTurn(struct Position * currentPosition);
 void copyPosition(struct Position * sourcePosition, struct Position * destinationPosition);
-void displayLegalMoves(struct Position * currentPostion);
+
+
+void formatMove(char * move);
+int * getFromSquareCoordinates(char * move);
+int * getToSquareCoordinates(char * move);
+
+
+
+int isFile(char character);
+int isRank(char character);
+
+
 
 #endif
