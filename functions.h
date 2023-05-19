@@ -38,22 +38,11 @@ struct Position {
     int enPassantFile;
 };
 
-struct CandidateMoveList {
-    char move[7];
-    struct CandidateMoveList * next;
-};
-
 void gameLoop(struct Position * currentPosition);
 void drawSquare(int value);
 void drawBoard(struct Position * currentPosition);
 void movePiece(int from[2], int to[2], struct Position * currentPosition);
 void formatMove(char * move);
-int isLegalMove(char * move, struct Position * currentPosition);
-int isLegalMoveForPiece(char * move, struct Position * currentPosition);
-int isLegalPawnMove(char * move, struct Position * currentPosition);
-int isLegalKnightMove(char * move, struct Position * currentPosition);
-int isLegalBishopMove(char * move, struct Position * currentPosition);
-int isLegalRookMove(char * move, struct Position * currentPosition);
 int makeMove(char * move, struct Position * currentPosition);
 char * getUserInput();
 char * rtrim(char * string);
@@ -69,6 +58,5 @@ void castleQueenSide(struct Position * currentPosition);
 int getOccupantColor(int occupant);
 int getOccupantPieceType(int occupant);
 void displayLegalMoves(struct Position * currentPostion);
-struct CandidateMoveList * getLegalMoves(struct Position * currentPosition);
 
 #endif
