@@ -4,6 +4,8 @@
 #include <time.h>
 #include "functions.h"
 #include "log.h"
+#include "position.h"
+
 /* Standardizes user input to include a `-` between squares even when the user omits it. */
 void sanitizeMove(char * userInput)
 {

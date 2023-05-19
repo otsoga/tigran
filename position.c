@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "functions.h"
+#include "position.h"
 
 void copyPosition(struct Position * sourcePosition, struct Position * destinationPosition)
 {

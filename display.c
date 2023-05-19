@@ -2,7 +2,7 @@
 #include <string.h>
 #include "functions.h"
 #include "rules.h"
-
+#include "position.h"
 void displayInterface(struct Position * currentPosition)
 {
     drawBoard(currentPosition);
