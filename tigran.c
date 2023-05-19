@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "functions.h"
+#include "rules.h"
 #include "log.h"
 
 

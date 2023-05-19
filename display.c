@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "functions.h"
+#include "rules.h"
 
-// TODO: these draw functions should be placed in a new display.c
 void drawBoard(struct Position * currentPosition)
 {
     printf("\n");

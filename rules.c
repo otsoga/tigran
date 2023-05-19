@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "functions.h"
+#include "rules.h"
 #include "log.h"
 
 int isLegalMove(char * move, struct Position * currentPosition)
@@ -14,9 +15,8 @@ int isLegalMove(char * move, struct Position * currentPosition)
     int isValidFromSquare = isFile(move[FROM_FILE]) && isRank(move[FROM_RANK]);
     int isValidToSquare = isFile(move[TO_FILE]) && isRank(move[TO_RANK]);
     
-    // user error should be "illegal move"
     if (!isValidFromSquare || !isValidToSquare) { 
-        logEvent("user error", "invalid to/from square");
+        logUserError("invalid to/from square");
         return 0; 
     }
 
@@ -24,12 +24,12 @@ int isLegalMove(char * move, struct Position * currentPosition)
     int toSquareOccupant = getSquareOccupant(&move[3], currentPosition);
 
     if (getOccupantColor(fromSquareOccupant) != currentPosition->turn) { 
-        logEvent("user error", "trying move enemy piece or nonexistent piece.");
+        logUserError("trying move enemy piece or nonexistent piece.");
         return 0;
     }
 
     if (getOccupantColor(toSquareOccupant) == currentPosition->turn) { 
-        logEvent("user error", "cannot capture own piece");
+        logUserError("cannot capture own piece");
         return 0;
     }
 
@@ -51,6 +51,8 @@ int isLegalMoveForPiece(char * move, struct Position * currentPosition)
             return isLegalBishopMove(move, currentPosition);
         case ROOK:
             return isLegalRookMove(move, currentPosition);
+        case QUEEN:
+            return isLegalQueenMove(move, currentPosition);
         default:
             return 1;
     }
@@ -87,7 +89,7 @@ int isLegalPawnMove(char * move, struct Position * currentPosition)
     }
 
     if (fileDiff == 0 && (toSquareOccupant || squareInFrontOfPawnOccupied)) {
-        logUserError("pawns can only capture enemy pieces that are diagonally adjacent to them.");
+        logUserError("pawns can only move forward ");
         return 0;
     }
 
@@ -100,7 +102,10 @@ int isLegalKnightMove(char * move, struct Position * currentPosition)
     int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
     int knightJumps = ((rankDiff == 2 && fileDiff == 1) || (rankDiff == 1 && fileDiff == 2));
 
-    if (!knightJumps) { return 0; }
+    if (!knightJumps) { 
+        logUserError("knights move in an L shape.");    
+        return 0; 
+    }
 
     return 1;
 }
@@ -111,7 +116,10 @@ int isLegalBishopMove(char * move, struct Position * currentPosition)
     int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
     int moveOnDiagonal = rankDiff == fileDiff;
 
-    if (!moveOnDiagonal) { return 0; }
+    if (!moveOnDiagonal) { 
+        logUserError("bishops can only move along daigonals.");
+        return 0;
+    }
 
     return 1;
 }
@@ -122,7 +130,25 @@ int isLegalRookMove(char * move, struct Position * currentPosition)
     int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
     int moveOnRankOrFile = rankDiff == 0 || fileDiff == 0;
 
-    if (!moveOnRankOrFile) { return 0; }
+    if (!moveOnRankOrFile) { 
+        logUserError("rooks can only move along ranks and files.");
+        return 0; 
+    }
+
+    return 1;
+}
+
+int isLegalQueenMove(char * move, struct Position * currentPosition)
+{
+    int rankDiff = abs(move[TO_RANK] - move[FROM_RANK]);
+    int fileDiff = abs(move[TO_FILE] - move[FROM_FILE]);
+    int moveOnRankOrFile = rankDiff == 0 || fileDiff == 0;
+    int moveOnDiagonal = rankDiff == fileDiff;
+
+    if (!moveOnRankOrFile && !moveOnDiagonal) { 
+        logUserError("queens can only move along ranks, files, or diagonals.");
+        return 0; 
+    }
 
     return 1;
 }
