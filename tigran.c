@@ -5,6 +5,7 @@
 #include "log.h"
 #include "rules.h"
 #include "input.h"
+#include "position.h"
 
 int main(void)
 {

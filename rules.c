@@ -4,6 +4,7 @@
 #include "functions.h"
 #include "rules.h"
 #include "log.h"
+#include "position.h"
 
 int isLegalMove(char * move, struct Position * currentPosition)
 {
