@@ -22,4 +22,7 @@
 #define BN 11
 #define BP 12
 
+void initPosition(struct Position * position);
+void copyPosition(struct Position * sourcePosition, struct Position * destinationPosition);
+
 #endif

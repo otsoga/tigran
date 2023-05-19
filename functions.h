@@ -51,13 +51,11 @@ int getOccupantColor(int occupant);
 int getOccupantPieceType(int occupant);
 
 // these modify the given position
-void initPosition(struct Position * position);
 void movePiece(struct Position * currentPosition, int from[2], int to[2]);
 int makeMove(struct Position * currentPosition, char * move);
 void castleKingSide(struct Position * currentPosition);
 void castleQueenSide(struct Position * currentPosition);
 void switchTurn(struct Position * currentPosition);
-void copyPosition(struct Position * sourcePosition, struct Position * destinationPosition);
 
 
 void sanitizeMove(char * move);

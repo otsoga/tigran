@@ -2,6 +2,28 @@
 #include "functions.h"
 #include "position.h"
 
+void initPosition(struct Position * position)
+{
+    struct Position initialPosition = {
+        {
+            {WR, WP, 00, 00, 00, 00, BP, BR},
+            {WN, WP, 00, 00, 00, 00, BP, BN},
+            {WB, WP, 00, 00, 00, 00, BP, BB},
+            {WQ, WP, 00, 00, 00, 00, BP, BQ},
+            {WK, WP, 00, 00, 00, 00, BP, BK},
+            {WB, WP, 00, 00, 00, 00, BP, BB},
+            {WN, WP, 00, 00, 00, 00, BP, BN},
+            {WR, WP, 00, 00, 00, 00, BP, BR}
+        },
+        WHITE,
+        NOT_POSSIBLE,
+        NOT_PROHBITED,
+        NOT_PROHBITED,
+    };
+
+    copyPosition(&initialPosition, position);
+}
+
 void copyPosition(struct Position * sourcePosition, struct Position * destinationPosition)
 {
     for (int i = 0; i < 8; i++) {
