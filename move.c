@@ -5,7 +5,7 @@
 #include "functions.h"
 #include "log.h"
 /* Standardizes user input to include a `-` between squares even when the user omits it. */
-void formatMove(char * userInput)
+void sanitizeMove(char * userInput)
 {
     if (strcmp(userInput, "0-0") == 0 || strcmp(userInput, "0-0-0") == 0) { return; }
     if (userInput[2] != '-') { // this was *(userInput +2) before

@@ -19,15 +19,11 @@ void gameLoop()
     struct Position * currentPosition = calloc(1, sizeof(struct Position));
     initPosition(currentPosition);
     char * userInput;
-    char turn[6];
 
     logEvent("New Game Started", "");
     while(1) {
-        drawBoard(currentPosition);
-        strncpy(turn, currentPosition->turn  == TURN_BLACK ? "Black" : "White", 6);
-        printf("Legal moves for %s: \n", turn);
-        // displayLegalMoves(currentPosition);
-        printf("%s's move: ", turn);
+        displayInterface(currentPosition);
+
         userInput = getUserInput();
 
         if (strcmp(userInput, "quit") == 0 || strcmp(userInput, "exit") == 0) {
@@ -42,7 +38,7 @@ void gameLoop()
             continue;
         }
 
-        formatMove(userInput);
+        sanitizeMove(userInput);
 
         if (!isLegalMove(userInput, currentPosition)) {
           printf("\nIllegal move, try again.\n");

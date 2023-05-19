@@ -1,6 +1,17 @@
 #include <stdio.h>
+#include <string.h>
 #include "functions.h"
 #include "rules.h"
+
+void displayInterface(struct Position * currentPosition)
+{
+    drawBoard(currentPosition);
+    displayLegalMoves(currentPosition);
+
+    char turn[6];
+    strncpy(turn, currentPosition->turn  == TURN_BLACK ? "Black" : "White", 6);
+    printf("%s's move: ", turn);
+}
 
 void drawBoard(struct Position * currentPosition)
 {
@@ -14,6 +25,13 @@ void drawBoard(struct Position * currentPosition)
     }
 
     printf("\n");
+}
+
+void displayLegalMoves(struct Position * currentPosition)
+{
+    printf("Legal moves: \n\n");
+    // struct CandidateMoveList * move = getLegalMoves(currentPosition);
+    // printf("Moves: %s", move->move );
 }
 
 void drawSquare(int value)
@@ -34,10 +52,4 @@ void drawSquare(int value)
     piece[0]  = '.';
 
     printf("%c", piece[value]);
-}
-
-void displayLegalMoves(struct Position * currentPosition)
-{
-    struct CandidateMoveList * move = getLegalMoves(currentPosition);
-    printf("Moves: %s", move->move );
 }

@@ -4,7 +4,6 @@
 #include "log.h"
 #include "input.h"
 
-
 char * getUserInput()
 {
     char * input = (char *) calloc(USER_INPUT_LENGTH, sizeof(char));

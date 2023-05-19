@@ -21,7 +21,6 @@
 #define BB 10
 #define BN 11
 #define BP 12
-#define USER_INPUT_LENGTH 20
 #define RANKS 8
 #define FILES 8
 #define ORIGIN_FILE 0
@@ -42,6 +41,7 @@ struct Position {
 };
 
 void gameLoop();
+void displayInterface(struct Position * currentPosition);
 void drawSquare(int value);
 void drawBoard(struct Position * currentPosition);
 void displayLegalMoves(struct Position * currentPosition);
@@ -60,7 +60,7 @@ void switchTurn(struct Position * currentPosition);
 void copyPosition(struct Position * sourcePosition, struct Position * destinationPosition);
 
 
-void formatMove(char * move);
+void sanitizeMove(char * move);
 int * getFromSquareCoordinates(char * move);
 int * getToSquareCoordinates(char * move);
 
