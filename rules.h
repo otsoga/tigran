@@ -1,10 +1,9 @@
 #ifndef RULES_H
 #define RULES_H
 
-struct CandidateMoveList {
-    char move[7];
-    struct CandidateMoveList * next;
-};
+// struct LegalMoveList {
+//     char move[7];
+// };
 
 int isLegalMove(char * move, struct Position * currentPosition);
 int isEachSquareValid(char * move, struct Position * currentPosition);
@@ -16,6 +15,6 @@ int isLegalRookMove(char * move, struct Position * currentPosition);
 int isLegalQueenMove(char * move, struct Position * currentPosition);
 int isLegalKingMove(char * move, struct Position * currentPosition);
 int isLegalCastleMove(char * move, struct Position * currentPosition);
-struct CandidateMoveList * getLegalMoves(struct Position * currentPosition);
+// struct LegalMoveList * getLegalMoves(struct Position * currentPosition);
 
 #endif

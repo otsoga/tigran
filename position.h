@@ -24,5 +24,9 @@
 
 void initPosition(struct Position * position);
 void copyPosition(struct Position * sourcePosition, struct Position * destinationPosition);
+int getOccupantColor(int occupant);
+int getSquareOccupant(struct Position * currentPosition, char * square);
+int getOccupantPieceType(int occupant);
+
 
 #endif

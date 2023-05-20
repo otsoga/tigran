@@ -1,6 +1,8 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+#include "pgn.h"
+
 #define WHITE 1
 #define BLACK 2
 #define KING 1
@@ -33,7 +35,7 @@
 #define NOT_PROHBITED 0
 
 struct Position {
-    int board[8][8];
+    int board[RANKS][FILES];
     int turn;
     int enPassantFile;
     int kingsideCastleStatus;
@@ -41,21 +43,16 @@ struct Position {
 };
 
 void gameLoop();
-void displayInterface(struct Position * currentPosition);
+void displayInterface(struct Position * currentPosition, struct PgnGame * record);
+void displayPgnGame(struct PgnGame * record);
 void drawSquare(int value);
 void drawBoard(struct Position * currentPosition);
 void displayLegalMoves(struct Position * currentPosition);
 
-int getSquareOccupant(struct Position * currentPosition, char * move);
-int getOccupantColor(int occupant);
-int getOccupantPieceType(int occupant);
+
 
 // these modify the given position
-void movePiece(struct Position * currentPosition, int from[2], int to[2]);
-int makeMove(struct Position * currentPosition, char * move);
-void castleKingSide(struct Position * currentPosition);
-void castleQueenSide(struct Position * currentPosition);
-void switchTurn(struct Position * currentPosition);
+
 
 
 void sanitizeMove(char * move);

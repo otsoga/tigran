@@ -3,8 +3,13 @@
 #include "functions.h"
 #include "rules.h"
 #include "position.h"
-void displayInterface(struct Position * currentPosition)
+#include "pgn.h"
+#include "log.h"
+#include "display.h"
+
+void displayInterface(struct Position * currentPosition, struct PgnGame * record)
 {
+    displayPgnGame(record);
     drawBoard(currentPosition);
     displayLegalMoves(currentPosition);
 
@@ -24,6 +29,25 @@ void drawBoard(struct Position * currentPosition)
         printf("\n");
     }
 
+    printf("\n");
+}
+
+void displayPgnGame(struct PgnGame * record)
+{
+    int isWhitesTurn;
+    printf("[Event \"%s\"]\n\n", record->event);
+    for (int i = 0; i < record->moveIndex; i++) {
+        isWhitesTurn = i % 2 == 0;
+
+        if (isWhitesTurn) {
+            printf("%d. ", i / 2 + 1);
+        }
+        printf("%s ", record->moveList[i]);
+        
+        if ((i + 1) % (2 * PGN_MOVES_PER_LINE) == 0) {
+            printf("\n");
+        }
+    }
     printf("\n");
 }
 

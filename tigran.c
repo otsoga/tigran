@@ -6,6 +6,8 @@
 #include "rules.h"
 #include "input.h"
 #include "position.h"
+#include "move.h"
+#include "pgn.h"
 
 int main(void)
 {
@@ -19,11 +21,12 @@ void gameLoop()
 {
     struct Position * currentPosition = calloc(1, sizeof(struct Position));
     initPosition(currentPosition);
+    struct PgnGame * moveList = initPgnGame();
     char * userInput;
 
     logEvent("New Game Started", "");
     while(1) {
-        displayInterface(currentPosition);
+        displayInterface(currentPosition, moveList);
 
         userInput = getUserInput();
 
@@ -48,6 +51,7 @@ void gameLoop()
         }
 
         makeMove(currentPosition, userInput);
+        addMoveToPgnGame(moveList, userInput);
         free(userInput);
         switchTurn(currentPosition);
     }

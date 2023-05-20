@@ -9,7 +9,7 @@
 int isLegalMove(char * move, struct Position * currentPosition)
 {
     if (strcmp(move, "0-0") == 0 || strcmp(move, "0-0-0") == 0) {
-        if (!isLegalCastleMove(move, currentPosition)) { return 0; }
+        return isLegalCastleMove(move, currentPosition);
     }
 
     if (!isEachSquareValid(move, currentPosition)) { return 0; }
@@ -178,10 +178,10 @@ int isLegalQueenMove(char * move, struct Position * currentPosition)
     return 1;
 }
 
-struct CandidateMoveList * getLegalMoves(struct Position * currentPosition)
-{
-    struct CandidateMoveList * legalMoves = malloc(sizeof(struct CandidateMoveList));
-    strncpy(legalMoves->move, "e2-e4", 7);
+// struct CandidateMoveList * getLegalMoves(struct Position * currentPosition)
+// {
+//     struct CandidateMoveList * legalMoves = malloc(sizeof(struct CandidateMoveList));
+//     strncpy(legalMoves->move, "e2-e4", 7);
 
-    return legalMoves;
-}
+//     return legalMoves;
+// }
