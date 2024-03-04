@@ -78,6 +78,8 @@ int isLegalMoveForPiece(char * move, struct Position * currentPosition)
             return isLegalRookMove(move, currentPosition);
         case QUEEN:
             return isLegalQueenMove(move, currentPosition);
+        case KING:
+            return isLegalKingMove(move, currentPosition);
         default:
             return 1;
     }
@@ -172,6 +174,26 @@ int isLegalQueenMove(char * move, struct Position * currentPosition)
 
     if (!moveOnRankOrFile && !moveOnDiagonal) { 
         logUserError("queens can only move along ranks, files, or diagonals.");
+        return 0; 
+    }
+
+    return 1;
+}
+
+int isLegalKingMove(char * move, struct Position * currentPosition)
+{
+    int rankDiff = abs(move[DESTINATION_RANK] - move[ORIGIN_RANK]);
+    int fileDiff = abs(move[DESTINATION_FILE] - move[ORIGIN_FILE]);
+    int moveOnRankOrFile = rankDiff == 0 || fileDiff == 0;
+    int moveOnDiagonal = rankDiff == fileDiff;
+
+    if (rankDiff > 1 || fileDiff > 1) { 
+        logUserError("kings can only move one square at a time.");
+        return 0; 
+    }
+
+    if (!moveOnRankOrFile && !moveOnDiagonal) { 
+        logUserError("kings can only move along ranks, files, or diagonals.");
         return 0; 
     }
 

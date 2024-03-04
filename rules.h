@@ -15,6 +15,6 @@ int isLegalRookMove(char * move, struct Position * currentPosition);
 int isLegalQueenMove(char * move, struct Position * currentPosition);
 int isLegalKingMove(char * move, struct Position * currentPosition);
 int isLegalCastleMove(char * move, struct Position * currentPosition);
-// struct LegalMoveList * getLegalMoves(struct Position * currentPosition);
+struct LegalMoveList * getLegalMoves(struct Position * currentPosition);
 
 #endif

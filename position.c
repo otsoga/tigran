@@ -16,7 +16,8 @@ void initPosition(struct Position * position)
             {WR, WP, 00, 00, 00, 00, BP, BR}
         },
         WHITE,
-        NOT_POSSIBLE,
+        NONE,
+        NONE,
         NOT_PROHBITED,
         NOT_PROHBITED,
     };
@@ -33,7 +34,7 @@ void copyPosition(struct Position * sourcePosition, struct Position * destinatio
     }
 
     destinationPosition->turn = sourcePosition->turn;
-    destinationPosition->enPassantFile = sourcePosition->enPassantFile;
+    destinationPosition->enPassantToFile = sourcePosition->enPassantToFile;
     destinationPosition->kingsideCastleStatus = sourcePosition->kingsideCastleStatus;
     destinationPosition->queensideCastleStatus = sourcePosition->queensideCastleStatus;
 }
