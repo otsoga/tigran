@@ -1,7 +1,7 @@
-# Nimzo Chess Engine
+# Tigran
 
 ## Introduction
-Nimzo is an chess program under development and written in C.
+Tigran is an chess program under development and written in C.
 
 ## Roadmap
 
