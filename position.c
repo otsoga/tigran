@@ -5,6 +5,18 @@
 void initPosition(struct Position * position)
 {
     struct Position initialPosition = {
+        // I think this structure would lead to a more intuitive program,
+        // but my code elsewhere is based on the other structure
+        // {
+        //     {WR, WN, WB, WQ, WK, WB, WN, WR},
+        //     {WP, WP, WP, WP, WP, WP, WP, WP},
+        //     {00, 00, 00, 00, 00, 00, 00, 00},
+        //     {00, 00, 00, 00, 00, 00, 00, 00},
+        //     {00, 00, 00, 00, 00, 00, 00, 00},
+        //     {00, 00, 00, 00, 00, 00, 00, 00},
+        //     {BP, BP, BP, BP, BP, BP, BP, BP},
+        //     {BR, BN, BB, BQ, BK, BB, BN, BR},
+        // },
         {
             {WR, WP, 00, 00, 00, 00, BP, BR},
             {WN, WP, 00, 00, 00, 00, BP, BN},

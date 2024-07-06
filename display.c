@@ -32,6 +32,21 @@ void drawBoard(struct Position * currentPosition)
     printf("\n");
 }
 
+/* Draws the board I would prefer to have */
+// void drawBoard(struct Position * currentPosition)
+// {
+//     printf("\n");
+
+//     for (int i = 7; i > -1; i--) {
+//         for(int j = 0; j < 8; j++) {
+//             drawSquare(currentPosition->board[i][j]);
+//         }
+//         printf("\n");
+//     }
+
+//     printf("\n");
+// }
+
 void displayPgnGame(struct PgnGame * record)
 {
     int isWhitesTurn;

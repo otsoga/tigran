@@ -32,8 +32,36 @@ int makeMove(struct Position * currentPosition, char * move)
     if (isFile(*move)) {
         int * from = getFromSquareCoordinates(move);
         int * to = getToSquareCoordinates(move);
-        // printf("TO: %d, %d \n", to[0], to[1]);
+        // printf("TO: %d, %d \n", to[0], to[1]); // file, rank as ints
         // printf("FROM: %d, %d \n", from[0], from[1] );
+        int piece = getSquareOccupant(currentPosition, move);
+        
+        if (piece == WK) {
+            currentPosition->whiteKingsideCastleStatus = PROHIBITED;
+            currentPosition->whiteQueensideCastleStatus = PROHIBITED;
+        }
+
+        if (piece == BK) {
+            currentPosition->blackKingsideCastleStatus = PROHIBITED;
+            currentPosition->blackQueensideCastleStatus = PROHIBITED;
+        }
+
+        if (from[0] == 7 && from[1] == 0) { // white kingside rook square
+            currentPosition->whiteKingsideCastleStatus = PROHIBITED;
+        }
+
+        if (from[0] == 0 && from[1] == 0) { // white queenside rook square
+            currentPosition->whiteQueensideCastleStatus = PROHIBITED;
+        }
+
+        if (from[0] == 7 && from[1] == 7) { // black kingside rook square
+            currentPosition->blackKingsideCastleStatus = PROHIBITED;
+        }
+
+        if (from[0] == 0 && from[1] == 7) { // a8 square
+            currentPosition->blackQueensideCastleStatus = PROHIBITED;
+        }
+
         movePiece(currentPosition, from, to);
         free(from);
         free(to);
@@ -72,12 +100,12 @@ int * getFromSquareCoordinates(char * move)
     return square;
 }
 
-/* Moves piece from one part of the board array to another. Only understands ints */
-void movePiece(struct Position * currentPosition, int from[2], int to[2])
-{
-    currentPosition->board[to[0]][to[1]] = currentPosition->board[from[0]][from[1]];
-    currentPosition->board[from[0]][from[1]] = 0;
-}
+    /* Moves piece from one part of the board array to another. Only understands ints */
+    void movePiece(struct Position * currentPosition, int from[2], int to[2])
+    {
+        currentPosition->board[to[0]][to[1]] = currentPosition->board[from[0]][from[1]];
+        currentPosition->board[from[0]][from[1]] = 0;
+    }
 
 void castleKingSide(struct Position * currentPosition)
 {
