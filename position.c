@@ -15,11 +15,12 @@ void initPosition(struct Position * position)
             {WN, WP, 00, 00, 00, 00, BP, BN},
             {WR, WP, 00, 00, 00, 00, BP, BR}
         },
-        WHITE,
-        NONE,
-        NONE,
-        NOT_PROHBITED,
-        NOT_PROHBITED,
+        WHITE, // turn
+        NONE, // enPassant File
+        ALLOWED, // whiteKingsideCastleStatus
+        ALLOWED, // blackKingsideCastleStatus
+        ALLOWED, // whiteQueensideCastleStatus
+        ALLOWED // blackQueensideCastleStatus
     };
 
     copyPosition(&initialPosition, position);
@@ -34,9 +35,11 @@ void copyPosition(struct Position * sourcePosition, struct Position * destinatio
     }
 
     destinationPosition->turn = sourcePosition->turn;
-    destinationPosition->enPassantToFile = sourcePosition->enPassantToFile;
-    destinationPosition->kingsideCastleStatus = sourcePosition->kingsideCastleStatus;
-    destinationPosition->queensideCastleStatus = sourcePosition->queensideCastleStatus;
+    destinationPosition->enPassantFile = sourcePosition->enPassantFile;
+    destinationPosition->whiteKingsideCastleStatus = sourcePosition->whiteKingsideCastleStatus;
+    destinationPosition->whiteQueensideCastleStatus = sourcePosition->whiteQueensideCastleStatus;
+    destinationPosition->blackKingsideCastleStatus = sourcePosition->blackKingsideCastleStatus;
+    destinationPosition->blackQueensideCastleStatus = sourcePosition->blackQueensideCastleStatus;
 }
 
 void switchTurn(struct Position * currentPosition)

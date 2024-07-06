@@ -32,15 +32,17 @@
 #define TURN_WHITE 1
 #define TURN_BLACK 2
 #define NONE -1
-#define NOT_PROHBITED 0
+#define ALLOWED 1
+#define PROHIBITED 0
 
 struct Position {
     int board[RANKS][FILES];
     int turn;
-    int enPassantToFile;
-    int enPassantFromFile;
-    int kingsideCastleStatus;
-    int queensideCastleStatus;
+    int enPassantFile;
+    int whiteKingsideCastleStatus;
+    int blackKingsideCastleStatus;
+    int whiteQueensideCastleStatus;
+    int blackQueensideCastleStatus;
 };
 
 void gameLoop();

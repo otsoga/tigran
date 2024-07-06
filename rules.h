@@ -6,7 +6,7 @@
 // };
 
 int isLegalMove(char * move, struct Position * currentPosition);
-int isEachSquareValid(char * move, struct Position * currentPosition);
+int areToAndFromSquaresValid(char * move, struct Position * currentPosition);
 int isLegalMoveForPiece(char * move, struct Position * currentPosition);
 int isLegalPawnMove(char * move, struct Position * currentPosition);
 int isLegalKnightMove(char * move, struct Position * currentPosition);

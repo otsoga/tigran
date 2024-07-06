@@ -12,7 +12,7 @@ int isLegalMove(char * move, struct Position * currentPosition)
         return isLegalCastleMove(move, currentPosition);
     }
 
-    if (!isEachSquareValid(move, currentPosition)) { return 0; }
+    if (!areToAndFromSquaresValid(move, currentPosition)) { return 0; }
     if (!isLegalMoveForPiece(move, currentPosition)) { return 0; }
     
     return 1;
@@ -26,18 +26,30 @@ int isKingInCheck(struct Position * currentPosition)
 
 int isLegalCastleMove(char * move, struct Position * currentPosition)
 {
-    if (strcmp(move, "0-0") == 0) {
-        return 1;
+    if (strcmp(move, "0-0") == 0) { 
+        if (currentPosition->turn == WHITE && currentPosition->whiteKingsideCastleStatus == ALLOWED) {
+            return 1;
+        }
+
+        if (currentPosition->turn == BLACK && currentPosition->blackKingsideCastleStatus == ALLOWED) {
+            return 1;
+        }
     }
 
     if (strcmp(move, "0-0-0") == 0) {
-        return 1;
+        if (currentPosition->turn == WHITE && currentPosition->whiteQueensideCastleStatus == ALLOWED) {
+            return 1;
+        }
+
+        if (currentPosition->turn == BLACK && currentPosition->blackQueensideCastleStatus == ALLOWED) {
+            return 1;
+        }
     }
 
     return 0;
 }
 
-int isEachSquareValid(char * move, struct Position * currentPosition) 
+int areToAndFromSquaresValid(char * move, struct Position * currentPosition) 
 {
     int isValidFromSquare = isFile(move[ORIGIN_FILE]) && isRank(move[ORIGIN_RANK]);
     int isValidToSquare = isFile(move[DESTINATION_FILE]) && isRank(move[DESTINATION_RANK]);
