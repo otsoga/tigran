@@ -4,8 +4,9 @@
 Tigran is an chess program under development and written in C.
 
 ## Building and running
-`docker build -t tigran`
-`docker run -it chess-game`
+`docker build -t tigran .`
+`docker run -it tigran`
+`docker build -t tigran . && docker run -it tigran`
 
 ## Roadmap
 
