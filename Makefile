@@ -1,5 +1,15 @@
-CC=gcc
-CFLAGS=-Wall
+CC := gcc
+CFLAGS := -Wall
+SRC_DIR := src
+SRCS := $(wildcard $(SRC_DIR)/*.c)
+TARGET := tigran
 
-all:
-	$(CC) tigran.c move.c input.c position.c rules.c log.c display.c pgn.c -o tigran
+all: $(TARGET)
+
+$(TARGET):
+	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)
+
+.PHONY: clean
+
+clean:
+	rm -f $(TARGET)

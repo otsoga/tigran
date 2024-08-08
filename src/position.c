@@ -60,14 +60,24 @@ void switchTurn(struct Position * currentPosition)
 }
 
 /* Returns occupant of a AN square */
+// int getSquareOccupant(struct Position * currentPosition, char * square)
+// {
+//     // subracting by 'a' and '1' because of zero-indexed arrays
+//     int file = (int) square[0] - 'a';
+//     int rank = (int) square[1] - '1';
+//     // printf("file: %d, rank: %d\n", file, rank);
+
+//     return currentPosition->board[file][rank];
+// }
+
 int getSquareOccupant(struct Position * currentPosition, char * square)
 {
     // subracting by 'a' and '1' because of zero-indexed arrays
-    int file = (int) square[0] - 'a';
-    int rank = (int) square[1] - '1';
+    int rank = (int) square[0] - 'a';
+    int file = (int) square[1] - '1';
     // printf("file: %d, rank: %d\n", file, rank);
 
-    return currentPosition->board[file][rank];
+    return currentPosition->board[rank][file];
 }
 
 int getOccupantColor(int occupant)
