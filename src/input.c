@@ -7,59 +7,73 @@
 char * getUserInput()
 {
     char * input = (char *) calloc(USER_INPUT_LENGTH, sizeof(char));
-    strncpy(input, "\0", sizeof(input));
-    char * trimmedInput = trim(fgets(input, USER_INPUT_LENGTH, stdin));
-    logEvent("user input", trimmedInput);
-
+    if (!input) return NULL;
+    
+    if (!fgets(input, USER_INPUT_LENGTH, stdin)) {
+        free(input);
+        return NULL;
+    }
+    
+    char * trimmedInput = trim(input);
     free(input);
-
     return trimmedInput;
 }
 
 char * trim(char * string)
 {
+    if (!string) return NULL;
+    
     char * rtrimmed = rtrim(string);
+    if (!rtrimmed) return NULL;
+    
     char * trimmed = ltrim(rtrimmed);
     free(rtrimmed);
-
     return trimmed;
 }
 
 char * rtrim(char * string)
 {
-    char * trimmedString;
-    int stringSize;
+    if (!string) return NULL;
+    
+    int len = strlen(string);
     int endIndex = -1;
 
-    for (int i = 0, len = strlen(string); i < len; ++i) {
-        if (string[i] == ' ') { continue; }
-        if (string[i] == '\n') {
-            string[i] = '\0';
+    for (int i = 0; i < len; ++i) {
+        if (string[i] == '\n' || string[i] == '\r') {
             break;
         }
-        endIndex = i;
+        if (string[i] != ' ') {
+            endIndex = i;
+        }
     }
 
-    stringSize = endIndex + 2;  // +2 for the last character and null terminator
-    trimmedString = (char*) calloc(stringSize, sizeof(char));
-    strncpy(trimmedString, string, stringSize - 1);
-    trimmedString[stringSize - 1] = '\0';  // Ensure null termination
+    if (endIndex == -1) return strdup("");
+
+    int newSize = endIndex + 2;  // +1 for last char, +1 for null terminator
+    char * trimmedString = (char*) malloc(newSize);
+    if (!trimmedString) return NULL;
+
+    strncpy(trimmedString, string, endIndex + 1);
+    trimmedString[endIndex + 1] = '\0';
 
     return trimmedString;
 }
 
 char * ltrim(char * string)
 {
-    int startIndex = -1;
+    if (!string) return NULL;
+    
+    int len = strlen(string);
+    int startIndex = 0;
 
-    for (int i = 0, len = strlen(string); i < len; ++i) {
-        if (string[i] == ' ') { continue; }
-        startIndex = i;
-        break;
+    while (startIndex < len && string[startIndex] == ' ') {
+        startIndex++;
     }
 
-    char * trimmedString = (char *) calloc(strlen(string + startIndex) + 1, sizeof(char));
-    strncpy(trimmedString, (string + startIndex), strlen(string + startIndex)+ 1);
+    int newLen = strlen(string + startIndex) + 1;  // +1 for null terminator
+    char * trimmedString = (char *) malloc(newLen);
+    if (!trimmedString) return NULL;
 
+    strcpy(trimmedString, string + startIndex);
     return trimmedString;
 }

@@ -51,19 +51,9 @@ void displayPgnGame(struct PgnGame * record);
 void drawSquare(int value);
 void drawBoard(struct Position * currentPosition);
 void displayLegalMoves(struct Position * currentPosition);
-
-
-
-// these modify the given position
-
-
-
-void sanitizeMove(char * move);
+void sanitizeMove(char ** move);
 int * getFromSquareCoordinates(char * move);
 int * getToSquareCoordinates(char * move);
-
-
-
 int isFile(char character);
 int isRank(char character);
 

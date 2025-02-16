@@ -10,16 +10,30 @@
 /* Standardizes user input to include a `-` between squares even when the user omits it. */
 void sanitizeMove(char ** userInput)
 {
-    if (strcmp(*userInput, "0-0") == 0 || strcmp(*userInput, "0-0-0") == 0) { return; }
+    if (!userInput || !(*userInput)) {
+        return;
+    }
+
+    if (strlen(*userInput) < 4) {
+        return;
+    }
+
     if ((*userInput)[2] != '-') {
-        int newLength = strlen(*userInput) + 1;
+        int newLength = strlen(*userInput) + 2;  // +2 for dash and null terminator
         char * tempString = (char *) malloc(newLength);
-        strncpy(tempString, "\0", newLength);
+        if (!tempString) {
+            return;
+        }
+        
+        memset(tempString, 0, newLength);
         strncpy(tempString, *userInput, 2);
-        strcat(tempString, "-");
-        strncat(tempString, *userInput + 2, 2);
-        free(*userInput);  // Free the old string
+        tempString[2] = '-';
+        strncpy(tempString + 3, *userInput + 2, 2);
+        tempString[newLength - 1] = '\0';
+        
+        char* oldInput = *userInput;
         *userInput = tempString;
+        free(oldInput);
     }
 }
 
