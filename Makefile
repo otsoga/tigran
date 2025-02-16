@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS := -Wall
+CFLAGS := -Wall -g
 SRC_DIR := src
 SRCS := $(wildcard $(SRC_DIR)/*.c)
 TARGET := tigran
