@@ -17,10 +17,6 @@ To build and run in one step:
 For memory leak checking with valgrind:
 `docker build -t tigran . && docker run -it tigran valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./tigran`
 
-# Development
-Run with valgrind memory checking:
-`docker build -t tigran . && docker run -it tigran valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./tigran`
-
 ## Roadmap
 
 The development of Tigran is guided by a series of progressive milestones aimed at enhancing its capabilities and user experience. Below is an overview of the key features and improvements I'm planning:

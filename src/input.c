@@ -18,10 +18,8 @@ char * getUserInput()
 
 char * trim(char * string)
 {
-    // logEvent("raw input", string);
     char * rtrimmed = rtrim(string);
     char * trimmed = ltrim(rtrimmed);
-
     free(rtrimmed);
 
     return trimmed;
@@ -42,9 +40,10 @@ char * rtrim(char * string)
         endIndex = i;
     }
 
-    stringSize = endIndex + 1;
+    stringSize = endIndex + 2;  // +2 for the last character and null terminator
     trimmedString = (char*) calloc(stringSize, sizeof(char));
-    strncpy(trimmedString, string, stringSize);
+    strncpy(trimmedString, string, stringSize - 1);
+    trimmedString[stringSize - 1] = '\0';  // Ensure null termination
 
     return trimmedString;
 }

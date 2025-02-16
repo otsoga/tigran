@@ -8,19 +8,18 @@
 #include "move.h"
 
 /* Standardizes user input to include a `-` between squares even when the user omits it. */
-void sanitizeMove(char * userInput)
+void sanitizeMove(char ** userInput)
 {
-    if (strcmp(userInput, "0-0") == 0 || strcmp(userInput, "0-0-0") == 0) { return; }
-    if (userInput[2] != '-') { // this was *(userInput +2) before
-        int newLength = strlen(userInput) + 1;
+    if (strcmp(*userInput, "0-0") == 0 || strcmp(*userInput, "0-0-0") == 0) { return; }
+    if ((*userInput)[2] != '-') {
+        int newLength = strlen(*userInput) + 1;
         char * tempString = (char *) malloc(newLength);
         strncpy(tempString, "\0", newLength);
-        strncpy(tempString, userInput, 2);
+        strncpy(tempString, *userInput, 2);
         strcat(tempString, "-");
-        strncat(tempString, userInput + 2, 2);
-        userInput = (char* ) realloc(userInput, newLength);
-        strncpy(userInput, tempString, newLength);
-        free(tempString);
+        strncat(tempString, *userInput + 2, 2);
+        free(*userInput);  // Free the old string
+        *userInput = tempString;
     }
 }
 

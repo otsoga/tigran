@@ -42,7 +42,7 @@ void gameLoop()
             continue;
         }
 
-        sanitizeMove(userInput);
+        sanitizeMove(&userInput);
 
         if (!isLegalMove(userInput, currentPosition)) {
           printf("\nIllegal move, try again.\n");
